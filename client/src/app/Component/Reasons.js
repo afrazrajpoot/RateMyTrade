@@ -15,7 +15,7 @@ const Reasons = () => {
                         <p className='flex items-center'><Icon icon="eva:arrow-up-fill" className='text-vw text-yellow-500' /><span className='text-gray-900 text-[1.2vw] ml-0.5vw font-medium'>{item?.title}</span></p>
                         <p className='text-[1vw] ml-2vw w-full text-gray-600 mt-vw'>{item?.info}</p>
                     </div>
-                ))}
+                ))} 
             </div>
         </section>
     </main>
