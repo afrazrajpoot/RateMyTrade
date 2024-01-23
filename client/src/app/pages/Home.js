@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../Component/Navbar'
+
 import Hero from '../Component/Hero'
 import Services from '../Component/Services'
 import Cards from '../Component/Cards'
@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
       {/* <h1>Home page</h1> */}
-      <Navbar />
+   
       <Hero />
       <Services />
       <Cards />

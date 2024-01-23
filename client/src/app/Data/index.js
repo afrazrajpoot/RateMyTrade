@@ -30,6 +30,10 @@ export let navData = [
         title:"Contact us",
         url:"/contact"
     },
+    {
+        title:"Profile",
+        url:"/profile"
+    },
 ]
 export let cards = [
     {
@@ -126,3 +130,74 @@ export const handymanFooter =[
     {title: "AFFORDABLE", info: "We charge sensible prices that are really competitive even when compared to contractors or freelance technicians. The clients are further given invoices professionally and don’t have to go through the worry of over-pricing."},
     {title: "CUSTOMER FOCUSED", info: "We provide after support for our services and make routine feedback calls to our customers. In the unlikely event you are unhappy with the job, we will redo it to your satisfaction*"},
   ]
+  export const aboutData = [
+    {
+      icon:<Icon icon="et:profile-male" />,
+      title:" WHO WE ARE",
+     info:"The Handyman Pvt. Limited is a facilities management company providing construction, renovation, and various on-call maintenance & repair services. Established in 2014, we are proudly serving thousands of customers in Islamabad & Rawalpindi. We are registered with Securities Exchange Commission of Pakistan (SECP) as well as Pakistan Engineering Council (PEC)."
+    },
+    {
+      icon:<Icon icon="fluent-emoji-high-contrast:clipboard" />,
+      title:"WHAT WE DO",
+      info:"We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+    },
+    {
+      icon:<Icon icon="vaadin:home-o" />,
+      title:"OUR FOCUS",
+      info:"Our aim is to make your life easy by providing affordable and professional handyman services at your doorstep."
+    }
+  ]
+  export const profileData = {
+    profileCard:[
+      {
+        type:"file",
+        name:"profileImage",
+        lable:"profile"
+      },
+      {
+        type:"text",
+        name:"createdAt",
+        lable:"Member since"
+      },
+      {
+        type:"text",
+        name:"location",
+        lable:"from"
+      },
+    ],
+    bio:[
+      {
+      type:"text",
+      name:"firstName",
+      lable:"First Name"
+      },
+      {
+      type:"text",
+      name:"lastName",
+      lable:"Last Name"
+      },
+      {
+      type:"password",
+      name:"password",
+      lable:"Password" 
+      },
+      {
+      type:"number",
+      name:"phoneNumber",
+      lable:"Phone Number"
+      },
+      {
+      type:"email",
+      name:"email",
+      lable:"Email Address"
+      },
+      {
+        type:'select',
+        name:"gender",
+        options:[
+          {value:"Male", label:"Male" },{value:"Female",label:"Female"}
+        ]
+      }
+    
+    ]
+  }

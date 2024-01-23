@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const connectDB = require('./db/connect');
@@ -8,6 +9,7 @@ const auth = require('./routes/auth')
 const tradesmanRoute = require('./routes/TradesMan');
 const chatRoute = require('./routes/Chat');
 const messageRoute = require('./routes/Message');
+const profileRoute = require("./routes/profileRoute")
 const http = require('http');
 // const server = http.createServer(app);
 const Message = require('./models/Message');
@@ -46,7 +48,7 @@ app.use('/api/v1/', auth);
 app.use('/api/v1/tradesman', tradesmanRoute);
 app.use('/api/v1/chat', chatRoute);
 app.use('/api/v1/message', messageRoute);
-
+app.use('/api/v1/profile', profileRoute);
 app.use(errorHandler)
 app.use(notFound)
 // socket.io --------configuration
