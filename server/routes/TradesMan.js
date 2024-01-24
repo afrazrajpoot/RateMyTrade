@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const { createTrademanProfile, updateTrademanProfile, deleteTrademanProfile, getAllTradesmenProfiles, getTrademanProfileById, getTrademanProfileByEmail, allTradesMen } = require('../controllers/Tradesmen');
+const { createTrademanProfile, updateTrademanProfile, deleteTrademanProfile, getAllTradesmenProfiles, getTrademanProfileById, getTrademanProfileByEmail, allTradesMen, searchTrademan } = require('../controllers/Tradesmen');
 const { authenticateJWT } = require('../middleware/authMiddleware');
 
 const storage = multer.diskStorage({
@@ -46,4 +46,5 @@ router.route('/update/:id').put(uploadFiles, updateTrademanProfile);
 
 // Get a letting by ID and Delete a letting by ID
 router.route('/:id').get(getTrademanProfileById).delete(deleteTrademanProfile);
+router.route('/search').post(searchTrademan)
 module.exports = router;

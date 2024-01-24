@@ -8,7 +8,7 @@ const connectDB = async () => {
       useCreateIndex: true,
       useFindAndModify: false,
     });
-
+    // mongoose.set('strictQuery', false);
     console.log('MongoDB connected');
   } catch (err) {
     console.error('Error connecting to MongoDB:', err);

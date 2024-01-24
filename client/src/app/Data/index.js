@@ -34,6 +34,10 @@ export let navData = [
         title:"Profile",
         url:"/profile"
     },
+    {
+      title:"UserProfile",
+      url:"/usersprofile"
+    }
 ]
 export let cards = [
     {
@@ -201,3 +205,39 @@ export const handymanFooter =[
     
     ]
   }
+
+  export const advancedSearch = [
+    {
+      label: "Occupation",
+      name: "occupation",
+      type: "select",
+      placeholder: "Occupation",
+      options: [
+        {label: "Carpenter", value: "carpenter"},
+        {label: "Software Engineer", value: "Software Engineer"},
+        {label: "Designer", value: "Designer"},
+        {label: "React Developer", value: "React Developer"},
+        {label: "Manager", value: "Manager"},
+        {label: "Accountant", value: "Accountant"},
+        {label: "Lawyer", value: "Lawyer"}
+      ]
+    },
+    {
+      label: "Username",
+      name: "username",
+      type: "text",
+      placeholder: "Enter Username",
+    },
+    {
+      label: "Min Hourly Rate",
+      name: "minhourlyRate",
+      type: "number",
+      placeholder: "Enter Min Hourly Rate",
+    },
+    {
+      label: "Max Hourly Rate",
+      name: "maxhourlyRate",
+      type: "number",
+      placeholder: "Enter Max Hourly Rate",
+    }
+  ]

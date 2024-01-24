@@ -35,6 +35,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
+  const [query,setQuery] = useState({});
   const navigate = useNavigate();
 
   const userLoginInfo = JSON.parse(localStorage.getItem("userLoginInfo"))
@@ -90,7 +91,7 @@ export const UserProvider = ({ children }) => {
     notification,
     setNotification,
     chats,
-    setChats, }}>
+    setChats, query,setQuery}}>
       {children}
     </UserContext.Provider>
   );
