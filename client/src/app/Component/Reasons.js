@@ -7,7 +7,7 @@ const Reasons = () => {
     <main className='w-full bg-gray-100 flex'>
         <img src="https://helloservices.co.uk/wp-content/uploads/2021/10/professional-handyman-near-me-.jpg" alt="remorte" className="w-full max-w-[50vw] object-cover" />
         <section className='w-full p-2vw'>
-            <h1 className='text-[1.5vw] font-medium text-gray-900'>REASONS TO CHOOSE US</h1>
+            <h1 className='text-[1.5vw] font-medium text-gray-900'>REASONS TO CHOOSE US</h1> 
             <p className='text-[1.2vw] text-gray-600 w-full max-w-[40vw]'>The Handyman provides a variety of services including construction, renovation, and maintenance & repair. Choose us because we are:</p>
             <div className="grid p-2vw grid-cols-2 gap-3">
                 {handymanReason?.map((item, index)=> (
