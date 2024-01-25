@@ -10,11 +10,13 @@ import SingleProfile from './app/pages/SingleProfile'
 import SearchUser from './app/pages/SearchUser'
 import Login from './app/pages/Login'
 import Register from './app/pages/Register'
+import Navbar2 from './app/Component/Navbar-2'
 
 const App = () => {
   return (
     <>
-    <Navbar />
+    {/* <Navbar /> */}
+    <Navbar2/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
