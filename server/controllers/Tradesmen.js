@@ -255,6 +255,40 @@ const advancedSearch = async (req, res) => {
     });
   }
 };
+const searchTrademan = async(req,res)=>{
+  console.log(req.query, "Search here ");
+  try{
+    const query = req.query;
+    // console.log(query,"search")
+    const searchQuery = {};
+    // console.log(searchQuery, "searchQuery");
+
+    // search by name 
+    if (query.username) {
+      searchQuery.username = { $regex: new RegExp(query.username, 'i') };
+      console.log(searchQuery);
+    }
+    // search by gategory 
+    if (query.occupation) {
+      searchQuery.occupation = { $regex: new RegExp(query.occupation, 'i') };
+      console.log(searchQuery);
+    }
+    // search by price o
+    if (query.minhourlyRate && query.maxhourlyRate) {
+     searchQuery.hourlyRate = { $lte: parseFloat(query.maxhourlyRate), $gte: parseFloat(query.minhourlyRate) };
+     console.log(searchQuery);
+    }
+    const results = await TrademanSchema.find(searchQuery);
+    res.status(200).json({
+      success:true,
+      data: results
+    });
+  }catch(err){
+    res.status(500).json({
+      error: 'Internal server error',
+    })
+  }
+}
 module.exports = {
   createTrademanProfile,
   updateTrademanProfile,
@@ -262,5 +296,6 @@ module.exports = {
   getTrademanProfileById,
   deleteTrademanProfile,
   getTrademanProfileByEmail,
-  allTradesMen
+  allTradesMen,
+  searchTrademan
 };
