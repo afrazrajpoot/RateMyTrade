@@ -1,104 +1,73 @@
 import React, { useState } from "react";
-import { profileData } from "../Data";
+import { useForm } from 'react-hook-form';
 import ProfileCard from "../Component/ProfileCard";
-import ProfileBio from "../Component/ProfileBio";
+import { useAddTradesmanMutation } from "../store/storeApi";
+import Description from "../Component/TradesmanProfile/Description";
+import Map from "../Component/GoogleMap/Map";
+import Portfolio from "../Component/TradesmanProfile/Portfolio";
 
 const Profile = () => {
   const [data, setData] = useState({});
-  
-  const handleData = (e) => {
-    setData({...data, [e.target.name]: e.target.value });
-  };
-  async function submitData(e){
-    e.preventDefault();
-   try{
-    const resp = await fetch("http://localhost:5000/api/v1/profile/createProfile",{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-   
-    if(resp.ok){
-      alert("submited successful")
-    }else{
-      alert("submit right cridential")
-    }
-    
-   }catch(err){
-     console.log(err);
-   }
-  }
-  return (
-    <>
-      <main className='flex w-full gap-[5vw]'>
-        <div className="w-full max-w-[20vw]  mt-[1vw] ml-[5vw] bg-slate-200 shadow-md rounded ">
-          {profileData.profileCard?.map((elem, i) => (
-            <ProfileCard key={i} {...elem} />
-          ))}
-        </div >
-        <form className=' grid grid-cols-2 p-[2vw]  w-full' onSubmit={submitData}>
-          {profileData.bio?.map((elem, i) => (
-            <div  className='p-[1vw]'>
-                <lable className='text-[1vw] font-medium' key={i}>{elem.lable}</lable> <br />
-              {elem.type === "text" ? (
-                <>
-                  <input className='w-full max-w-[30vw] p-[0.7vw] rounded-md focus:outline-none text-vw border-[1px] border-gray-300'
-                    type={elem.type}
-                    name={elem.name}
-                    placeholder={elem.lable}
-                    onChange={handleData}
-                  />
-                </>
-              ) :elem.type === "password" ? (
-                <>
-                  <input className='w-full max-w-[30vw] p-[0.7vw] rounded-md focus:outline-none text-vw border-[1px] border-gray-300'
-                    type={elem.type}
-                    name={elem.name}
-                    placeholder={elem.lable}
-                    onChange={handleData}
-                  />
-                </>
-              ) :
-              elem.type === "number" ? (
-                <>
-                  <input className='w-full max-w-[30vw] p-[0.7vw] rounded-md focus:outline-none text-vw border-[1px] border-gray-300'
-                    type={elem.type}
-                    name={elem.name}
-                    placeholder={elem.lable}
-                    onChange={handleData}
-                  />
-                </>
-              ) :
-              elem.type === "email" ? (
-                <>
-                  <input className='w-full max-w-[30vw] p-[0.7vw] rounded-md focus:outline-none text-vw border-[1px] border-gray-300' 
-                    type={elem.type}
-                    name={elem.name}
-                    placeholder={elem.lable}
-                    onChange={handleData}
-                  />
-                </>
-              ) :(
-                <>
-                <select name={elem.name} className='w-full max-w-[30vw] p-[0.7vw] rounded-md focus:outline-none text-vw border-[1px] border-gray-300' onChange={handleData}>
-                <option  className="text-vw" value="">select</option>
+  const [addTradesman] = useAddTradesmanMutation();
+  const [activeSection, setActiveSection] = useState('description');
 
-                    {
-                        elem.options?.map((option, i) => (
-                            <option key={i} className="text-vw" value={option.value}>{option.label}</option>
-                        ))
-                    }
-                </select>
-                </>
-              )}
-            </div>
-          ))}
-          <input type="submit" value='submit' id="" className='bg-blue-400 p-[1vw] text-[1.5vw] w-full max-w-[20vw] ml-[1vw] text-white rounded-md shadow-lg cursor-pointer'  />
+  const { handleSubmit, control, formState: { errors }, setValue, reset } = useForm({
+    defaultValues: {
+      tradeType: "",
+      phoneNumber: "",
+      location: '',
+      description: "",
+    }
+  });
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'description':
+        return <Description control={control} handleDataChange={handleDataChange} />;
+      case 'location':
+        return <Map />;
+      case 'portfolio':
+        return <Portfolio />;
+      default:
+        return null;
+    }
+  }
+  
+  const handleDataChange = (e) => {
+    const {name, value} = e.target;
+    setData({...data, [name]: value });
+    setValue(name, value);
+  };
+
+  async function onSubmit(e, data) {
+    e.preventDefault();
+    try {
+      const response = await addTradesman(data);
+      console.log(response, "response");
+      reset();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return (
+    <div className="w-full h-full">
+      <h1 className="text-[2vw] text-yellow-600 underline mt-vw font-medium text-center w-full">Complete your profile</h1>
+      <main className='flex p-vvw mt-2vw w-full'>
+        <div className="w-full max-w-[20vw] h-[21.3vw] mt-[1vw] ml-[5vw] border-[1px] rounded-md ">
+          <ProfileCard />
+        </div >
+        <form className='w-full h-[30vw] m-vw rounded-md shadow-md border-[1px] ' onSubmit={handleSubmit(onSubmit)}>
+          <section className="flex border-b-[1px] border-yellow-600 p-vw items-center">
+            <p onClick={() => {setActiveSection('description')}} className={`text-[1vw] ${activeSection === 'description' ? 'text-yellow-600 underline font-semibold' : ''} cursor-pointer ml-vw font-medium`}>Description</p>
+            <p onClick={() => {setActiveSection('location')}} className={`text-[1vw] ${activeSection === 'location' ? 'text-yellow-600 underline font-semibold' : ''} cursor-pointer ml-vw font-medium`}>Location</p>
+            <p onClick={() => {setActiveSection('portfolio')}} className={`text-[1vw] ${activeSection === 'portfolio' ? 'text-yellow-600 underline font-semibold' : ''} cursor-pointer ml-vw font-medium`}>Portfolio</p>
+          </section>
+          {renderSection()}
+          <input type="submit" value='Submit' className='bg-yellow-600 hover:bg-yellow-500 p-[0.5vw] text-vw ml-[1vw] text-white rounded-md shadow-lg cursor-pointer' />
         </form>
       </main>
-    </>
+    </div>
   );
 };
 

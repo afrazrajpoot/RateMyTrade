@@ -172,32 +172,77 @@ export const handymanFooter =[
     bio:[
       {
       type:"text",
-      name:"firstName",
-      lable:"First Name"
+      name:"tradeType",
+      lable:"Trade Type",
+      placeholder:"Trade Type",
+      rules: {
+        required: 'Trade Type is required',
+      }
       },
       {
       type:"text",
       name:"lastName",
-      lable:"Last Name"
+      lable:"Last Name",
+      placeholder:"Last Name",
+      rules: {
+        required: 'Last Name is required',
+      }
       },
       {
       type:"password",
       name:"password",
-      lable:"Password" 
+      lable:"Password",
+      placeholder:"Password",
+      rules: {
+        required: 'Password is required',
+        value: {
+          minLength: 8,
+          maxLength: 12,
+          pattern: {
+            value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,12}$/,
+            message: 'Invalid password format',
+          }
+        }
+      }
       },
       {
       type:"number",
       name:"phoneNumber",
-      lable:"Phone Number"
+      lable:"Phone Number",
+      placeholder:"Phone Number",
+      rules: {
+        required: 'Phone Number is required',
+        value: {
+          minLength: 11,
+          maxLength: 11,
+          pattern: {
+            value: /^[0-9]+$/,
+            message: 'enter valid phone number',
+          }
+        }
+      }
       },
       {
       type:"email",
       name:"email",
-      lable:"Email Address"
+      lable:"Email Address",
+      rules : {
+        required: 'Email is required',
+        pattern: {
+            value: /^\S+@\S+$/i,
+            message: 'Invalid email format',
+        }
+    }
+
       },
       {
         type:'select',
         name:"gender",
+        lable:"Gender",
+        placeholder:"Gender",
+        rules: {
+          required: 'Gender is required',
+        },
         options:[
           {value:"Male", label:"Male" },{value:"Female",label:"Female"}
         ]
@@ -240,4 +285,43 @@ export const handymanFooter =[
       type: "number",
       placeholder: "Enter Max Hourly Rate",
     }
+  ]
+
+  export const tradesmanProfileForm = [
+    {
+      type:"text",
+      name:"tradeType",
+      lable:"Trade Type",
+      placeholder:"Trade Type",
+      rules: {
+        required: 'Trade Type is required',
+      }
+    },
+    {
+      type:"text",
+      name:"location",
+      lable:"Trade Location",
+      placeholder:"Trade Location",
+      rules: {
+        required: 'Trade Location is required',
+      }
+    },
+    {
+      type:"number",
+      name:"phoneNumber",
+      lable:"Contact Number",
+      placeholder:"Contact Number",
+      rules: {
+        required: 'Contact Number is required',
+      }
+    },
+    {
+      type:"textarea",
+      name:"description",
+      lable:"Trade Description",
+      placeholder:"Trade Description",
+      rules: {
+        required: 'Trade Description is required',
+      }
+    },
   ]
