@@ -8,6 +8,8 @@ import Profile from './app/pages/Profile'
 import ProfileCards from './app/pages/ProfileCards'
 import SingleProfile from './app/pages/SingleProfile'
 import SearchUser from './app/pages/SearchUser'
+import Login from './app/pages/Login'
+import Register from './app/pages/Register'
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
         <Route path='/usersProfile' element={<ProfileCards />} />
         <Route path='/dynamicProfile/:id' element={<SingleProfile />} />
         <Route path='/searchUser' element={<SearchUser />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
       <Footer />
     </>
