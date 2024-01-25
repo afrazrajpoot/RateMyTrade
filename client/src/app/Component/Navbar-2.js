@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar2 = () => {
   return (
     <nav
-      class="relative flex w-full flex-wrap items-center justify-between bg-[#e8f3df] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4"
+      class="relative flex w-full flex-wrap items-center justify-between bg-[#e8f3df] opacity-80 sticky top-0 z-50 py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4"
       data-te-navbar-ref
     >
       <div class="flex w-full flex-wrap items-center justify-between px-3">
