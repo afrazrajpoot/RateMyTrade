@@ -9,7 +9,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     phone: "",
-    userType: "",
+    userType: "User",
   });
 
   const [errors, setErrors] = useState({
@@ -19,6 +19,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     phone: "",
+    uploadedImage: ""
   });
   const [uploadedImage, setUploadedImage] = useState("/img/avatar.png");
 
@@ -68,7 +69,7 @@ const Register = () => {
       newErrors.lastName = " ";
       isValid = false;
     } else if (formData.lastName.length < 4) {
-      newErrors.firstName = "Last Name must be atleast 4 characters";
+      newErrors.lastName = "Last Name must be atleast 4 characters";
       isValid = false;
     }
 
@@ -93,7 +94,7 @@ const Register = () => {
       newErrors.confirmPassword = " ";
       isValid = false;
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.password = "Passwords do not match";
+      newErrors.confirmPassword = "Passwords do not match";
       isValid = false;
     }
 
@@ -103,6 +104,12 @@ const Register = () => {
       isValid = false;
     } else if (!isValidPhone(formData.phone)) {
       newErrors.phone = "Phone is not valid format";
+      isValid = false;
+    }
+
+    // Validate image upload
+    if (uploadedImage === null) {
+      newErrors.uploadedImage = "Image is required";
       isValid = false;
     }
 
@@ -123,13 +130,15 @@ const Register = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Form data saved:", formData);
+      console.log("Form data saved:", formData, uploadedImage);
+    }else {
+      console.log(formData, uploadedImage)
     }
   };
   return (
     <section class="bg-gray-50">
-      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-dvh lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow md:mt-4 mb-4 sm:max-w-md xl:p-0 ">
+      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+        <div class="w-1/2 bg-white rounded-lg shadow md:mt-4 mb-4 w-1/2 sm:max-w-1/2 xl:p-0 ">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
               Create an account
@@ -141,6 +150,7 @@ const Register = () => {
                 onChange={handleImageUpload}
                 className="mb-2"
               />
+              {errors.uploadedImage && <div style={{ color: 'red' }}>{errors.uploadedImage}</div>}
               <img
                 src={uploadedImage}
                 alt="Uploaded"
@@ -160,11 +170,15 @@ const Register = () => {
                   <input
                     type="text"
                     name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    style={{ border: errors.firstName ? '1px ridge red' : '', backgroundColor: errors.firstName ? '#fce0d9' : '' }}
                     id="firstName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Enter your first name"
                     required=""
                   />
+                  {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
                 </div>
                 <div className="w-1/2 ml-2">
                   <label
@@ -176,11 +190,15 @@ const Register = () => {
                   <input
                     type="text"
                     name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    style={{ border: errors.lastName ? '1px ridge red' : '', backgroundColor: errors.lastName ? '#fce0d9' : '' }}
                     id="lastName"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Enter your last name"
                     required=""
                   />
+                  {errors.lastName && <div style={{ color: 'red' }}>{errors.lastName}</div>}
                 </div>
               </div>
 
@@ -194,11 +212,15 @@ const Register = () => {
                 <input
                   type="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  style={{ border: errors.email ? '1px ridge red' : '', backgroundColor: errors.email ? '#fce0d9' : '' }}
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="name@example.com"
                   required=""
                 />
+                {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
               </div>
               <div className="flex block">
                 <div className="w-1/2">
@@ -211,11 +233,15 @@ const Register = () => {
                   <input
                     type="password"
                     name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    style={{ border: errors.password ? '1px ridge red' : '', backgroundColor: errors.password ? '#fce0d9' : '' }}
                     id="password"
                     placeholder="Create new password"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required=""
                   />
+                  {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
                 </div>
                 <div className="w-1/2 ml-2">
                   <label
@@ -225,13 +251,17 @@ const Register = () => {
                     Confirm password
                   </label>
                   <input
-                    type="confirm-password"
-                    name="confirm-password"
-                    id="confirm-password"
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    style={{ border: errors.confirmPassword ? '1px ridge red' : '', backgroundColor: errors.confirmPassword ? '#fce0d9' : '' }}
+                    id="confirmPassword"
                     placeholder="Confirm password"
                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     required=""
                   />
+                  {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
                 </div>
               </div>
               <div>
@@ -244,11 +274,15 @@ const Register = () => {
                 <input
                   type="text"
                   name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  style={{ border: errors.phone ? '1px ridge red' : '', backgroundColor: errors.phone ? '#fce0d9' : '' }}
                   id="phone"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Enter your Phone Number"
                   required=""
                 />
+                {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
               </div>
               <div>
                 <label
@@ -260,6 +294,8 @@ const Register = () => {
                 <select
                   name="userType"
                   id="userType"
+                  value={formData.userType}
+                  onChange={handleChange}
                   className="w-full border p-2 rounded mb-4"
                 >
                   <option value="User">User</option>
@@ -287,6 +323,7 @@ const Register = () => {
               </div>
               <button
                 type="submit"
+                onClick={handleSubmit}
                 style={{ backgroundColor: "#e8f3df" }}
                 class="w-full hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
