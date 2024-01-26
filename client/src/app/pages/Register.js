@@ -138,7 +138,7 @@ const Register = () => {
   return (
     <section class="bg-gray-50">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-        <div class="w-1/2 bg-white rounded-lg shadow md:mt-4 mb-4 w-1/2 sm:max-w-1/2 xl:p-0 ">
+        <div class="md:w-1/2 bg-white rounded-lg shadow md:mt-4 mb-4 sm:w-1/2 xl:p-0 ">
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
               Create an account
