@@ -154,12 +154,12 @@ const Register = () => {
                 src={uploadedImage}
                 alt="Uploaded"
                 className="rounded-full mx-auto"
-                style={{ width: "120px", height: "120px" }}
+                style={{ width: "120px", height: "120px", border: "1px solid" }}
               />
             </div>
             <form class="space-y-4 md:space-y-6" action="#">
               <div className="flex block">
-                <div className="w-1/2">
+                <div className="w-full sm:w-1/2 sm:mb-0">
                   <label
                     for="firstName"
                     class="block mb-2 text-sm font-medium text-gray-900 "
@@ -179,7 +179,7 @@ const Register = () => {
                   />
                   {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
                 </div>
-                <div className="w-1/2 ml-2">
+                <div className="w-full sm:w-1/2 ml-2">
                   <label
                     for="lastName"
                     class="block mb-2 text-sm font-medium text-gray-900 "
