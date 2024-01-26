@@ -13,14 +13,13 @@ const Navbar2 = () => {
             class="mx-2 my-1 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
             
           >
-            <h1 className='font-bold'>Rate My Trade</h1>
-            {/* <img
+            <img
               class="mr-2"
-              src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
-              style={{height: "20px"}}
+              src="/images/logo-1.png"
+              style={{height: "50px"}}
               alt="TE Logo"
               loading="lazy"
-            /> */}
+            />
           </Link>
         </div>
         <button
