@@ -1,5 +1,5 @@
 import React from 'react'
-import { handymanFooter, handymanSocialLinks } from '../Data'
+import { handymanFooter, handymanSocialLinks } from '../../Data'
 import { Link } from 'react-router-dom'
 
 const Footer = () => {

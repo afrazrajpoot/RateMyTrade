@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useGlobalContext } from "../UserContext/UserContext";
+import { useGlobalContext } from "../../UserContext/UserContext";
 import axios from "axios";
 import { Link, useSearchParams } from "react-router-dom";
+import Layout from "../../Layout/Layout";
 
 const SearchUser = () => {
   const { query } = useGlobalContext();
@@ -26,6 +27,7 @@ const SearchUser = () => {
   }, []);
   return (
     <div>
+      <Layout>
       <div className="grid grid-cols-4 place-content-center">
         {arr?.data?.data.map((elem) => (
           <div
@@ -49,6 +51,7 @@ const SearchUser = () => {
           </div>
         ))}
       </div>
+      </Layout>
     </div>
   );
 };

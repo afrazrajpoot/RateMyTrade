@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from 'react-hook-form';
-import ProfileCard from "../Component/ProfileCard";
+import ProfileCard from "../Component/Card/ProfileCard";
 import { useAddTradesmanMutation } from "../store/storeApi";
 import Description from "../Component/TradesmanProfile/Description";
 import Map from "../Component/GoogleMap/Map";

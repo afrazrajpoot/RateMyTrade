@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllTradesmenQuery } from "../store/storeApi";
 import { Link } from "react-router-dom";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Form from "../Component/Form";
+import Layout from "../Layout/Layout";
+import TradesmanCard from "../Component/Card/TradesmanCard";
+import ServiceCard from "../Component/Card/ServiceCard";
+import { servicesCards } from "../Data";
 
 const ProfileCards = () => {
   let { data, isLoading, isError } = useGetAllTradesmenQuery();
@@ -14,34 +23,45 @@ const ProfileCards = () => {
     return <h1>Error</h1>;
   }
 
+  const CustomPrevArrow = (props) => (
+    <span {...props} className="text-vw text-black absolute cursor-pointer top-[8vw] left-0vw z-50">
+    <FontAwesomeIcon icon={faArrowLeft} className='text-2vw text-black  rounded-full hover:bg-gray-100 bg-white p-[0.7vw] text-center' />
+  </span>);
+  const CustomNextArrow = (props) => (
+      <span {...props} className="text-vw text-black absolute cursor-pointer top-[8vw] right-vw">
+    <FontAwesomeIcon icon={faArrowRight} className='text-2vw text-red-800 rounded-full hover:bg-gray-100 bg-white p-[0.7vw] text-center' />
+  </span> );
+
+const settings = { dots: false, prevArrow: <CustomPrevArrow />, nextArrow: <CustomNextArrow />, arrows: true, infinite: true, speed: 500, slidesToShow: 4, slidesToScroll: 1, autoplay: true, autoplaySpeed: 3000 };
+
+
   return (
+    <Layout>
     <main className="overflow-x-hidden">
       <Form />
-
-      <div className="grid grid-cols-4 place-content-center">
-        {data.map((elem, index) => (
-          <div
-            key={elem._id}
-            className="text-vw w-full max-w-[20vw] shadow-lg rounded-md flex flex-col items-center p-[3vw] gap-[1.5vw] justify-center"
-          >
-            <img
-              src={elem.image ? elem.image : "/img/man2.jpg"}
-              alt="profileImage"
-              className="w-full max-w-[8vw] rounded-full h-[8vw]"
-            />
-            <h1 className="font-semibold text-center text-[1.5vw]">
-              {elem.username}
-            </h1>
-            <p>{elem.occupation}</p>
-            <Link to={`/dynamicProfile/${elem._id}`}>
-              <button className="bg-orange-500 text-white p-[0.9vw] mt-[2vw] rounded-full hover:bg-orange-600 hover:text-white transition  duration-300 shadow-md">
-                view profile
-              </button>
-            </Link>
-          </div>
-        ))}
+      <div className="pl-2vw">
+      <div className="grid w-full gap-vw m-vw  grid-cols-1">
+      <Slider {...settings}>
+      {data?.map((card) => (
+        <TradesmanCard key={card.id} username={card?.username} image={card?.image} occupation={card?.occupation} />
+      ))}
+      </Slider>
       </div>
+      </div>
+      <main className="w-full p-2vw">
+        <h1 className="text-[1.5vw] font-medium italic">Chechout the best trending services</h1>
+        <div className="pl-2vw">
+        <div className="grid w-full gap-vw m-vw  grid-cols-1">
+        <Slider {...settings}>
+        {servicesCards?.map((card) => (
+          <ServiceCard key={card.id} card={card} />
+        ))}
+      </Slider>
+      </div>
+        </div>
+      </main>
     </main>
+    </Layout>
   );
 };
 

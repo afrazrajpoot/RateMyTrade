@@ -7,37 +7,21 @@ export let navData = [
         url:"/"
     },
     {
+      title:"Browse Tradesmen",
+      url:"/usersprofile"
+    },
+    {
+      title: "How it Works",
+      url: "/howitworks"
+    },
+    {
         title:"About Us",
         url:"/about"
     },
     {
-        title:"Book Now",
-        url:"/booknow"
-    },
-    {
-        title:"Services",
-        url:"/services"
-    },
-    {
-        title:"Projects",
-        url:"/projects"
-    },
-    {
-        title:"Prices",
-        url:"/price"
-    },
-    {
-        title:"Contact us",
+        title:"Contact Us",
         url:"/contact"
     },
-    {
-        title:"Profile",
-        url:"/profile"
-    },
-    {
-      title:"UserProfile",
-      url:"/usersprofile"
-    }
 ]
 export let cards = [
     {
@@ -268,22 +252,16 @@ export const handymanFooter =[
       ]
     },
     {
-      label: "Username",
-      name: "username",
-      type: "text",
-      placeholder: "Enter Username",
-    },
-    {
-      label: "Min Hourly Rate",
+      label: "Minimum Amount",
       name: "minhourlyRate",
       type: "number",
-      placeholder: "Enter Min Hourly Rate",
+      placeholder: "Enter Min Hourly Rate $",
     },
     {
-      label: "Max Hourly Rate",
+      label: "Maximum Amount",
       name: "maxhourlyRate",
       type: "number",
-      placeholder: "Enter Max Hourly Rate",
+      placeholder: "Enter Max Hourly Rate $",
     }
   ]
 
@@ -325,3 +303,88 @@ export const handymanFooter =[
       }
     },
   ]
+
+export const howItWorks = [
+  {
+    title : "Register Email Address",
+    icon: <Icon icon="tabler:mail-filled" />,
+    info: "We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+  },
+  {
+    title : "Find Trademan",
+    icon: <Icon icon="tabler:user-search" />,
+    info: "We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+  },
+  {
+    title : "Initialize the Contract",
+    icon: <Icon icon="clarity:contract-line" />,
+    info: "We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+  },
+  {
+    title : "Real-Time Messaging",
+    icon: <Icon icon="uiw:message" />,
+    info: "We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+  },
+  {
+    title : "Search By Location",
+    icon: <Icon icon="gis:location-man" />,
+    info: "We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+  },
+  {
+    title : "Get Work On-time",
+    icon: <Icon icon="ic:round-work-history" />,
+    info: "We provide air conditioning, carpentry, electrical, plumbing, MEP, masonry and janitorial services. We also provide construction, renovation & facility management services. Our services are available to both households and corporate customers."
+  },
+]
+
+
+export const servicesCards = [
+  {
+    id: 1,
+    title: "AI Artists",
+    desc: "Add talent to AI",
+    img: "https://images.pexels.com/photos/7532110/pexels-photo-7532110.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 2,
+    title: "Logo Design",
+    desc: "Build yor brand",
+    img: "https://images.pexels.com/photos/11295165/pexels-photo-11295165.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 3,
+    title: "WordPress",
+    desc: "Customize your site",
+    img: "https://images.pexels.com/photos/4371669/pexels-photo-4371669.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 4,
+    title: "Voice Over",
+    desc: "Share your message",
+    img: "https://images.pexels.com/photos/7608079/pexels-photo-7608079.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 5,
+    title: "Video Explainer",
+    desc: "Engage your audience",
+    img: "https://images.pexels.com/photos/13388047/pexels-photo-13388047.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 6,
+    title: "Social Media",
+    desc: "Reach more customers",
+    img: "https://images.pexels.com/photos/11378899/pexels-photo-11378899.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 7,
+    title: "SEO",
+    desc: "Unlock growth online",
+    img: "https://images.pexels.com/photos/4820241/pexels-photo-4820241.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+  {
+    id: 8,
+    title: "Illustration",
+    desc: "Color you dreams",
+    img: "https://images.pexels.com/photos/15032623/pexels-photo-15032623.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  },
+];

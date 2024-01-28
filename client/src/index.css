@@ -35,6 +35,12 @@
   -webkit-appearance: none;
 }
 
+.transition_card{
+  /* //hover:transition hover:duration-700 hover:ease-in-out */
+  &:hover{
+    transition: all 0.3s ease-in-out;
+  }
+}
 
 .col-center{
   width: 100%;
