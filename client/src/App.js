@@ -11,6 +11,8 @@ import SearchUser from './app/pages/SearchUser'
 import Login from './app/pages/Login'
 import Register from './app/pages/Register'
 import Navbar2 from './app/Component/Navbar-2'
+import BookingPage from './app/pages/Booking/BookingPage'
+import BookingForm from './app/pages/Booking/BookingForm'
 
 const App = () => {
   return (
@@ -26,6 +28,14 @@ const App = () => {
         <Route path='/searchUser' element={<SearchUser />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route
+          path="/tradesman/book-appointment/:id"
+          element={<BookingPage />}
+        />
+                <Route
+          path="/tradesman/book-appointment/:id/booking-form"
+          element={<BookingForm />}
+        />
       </Routes>
 
       <Footer />

@@ -38,6 +38,11 @@ const ProfileCards = () => {
                 view profile
               </button>
             </Link>
+            <Link to={`/tradesman/book-appointment/${elem._id}`}>
+              <button className="bg-orange-500 text-white p-[0.9vw] mt-[2vw] rounded-full hover:bg-orange-600 hover:text-white transition  duration-300 shadow-md">
+                Book Tradesman
+              </button>
+            </Link>
           </div>
         ))}
       </div>

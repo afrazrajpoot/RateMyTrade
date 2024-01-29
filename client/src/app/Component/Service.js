@@ -1,12 +1,15 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router-dom';
 
 const Service = () => {
     const array = [{title :"Call or book online"}, {title :"We schedule the visit"}, {title :"Handyman arrives & completes the job"}, {title: "Pay when the job is done"}, {title: "Follow up feedback call to ensure satisfaction"}]
   return (
     <article className='w-full p-2vw bg-white col-center'>
         <h1 className='text-[1.2vw] font-medium'>READY TO TRY OUR SERVICES?</h1>
+        <Link to='/usersProfile'>
         <button className='text-vw bg-orange-500 hover:bg-orange-600 mt-vw text-white hover:text-white transition-all duration-300 p-vw rounded-full w-full max-w-[11vw]'>BOOK NOW</button>
+        </Link>
         <div className="w-full bg-gray-100 mt-2vw flex">
             <section className="w-full max-w-[30vw] p-2vw">
                 <h1 className='text-[1vw] font-medium'>HOW IT WORKS:</h1>
