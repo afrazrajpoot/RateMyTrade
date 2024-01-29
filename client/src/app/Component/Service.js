@@ -6,7 +6,6 @@ const Service = () => {
   return (
     <article className='w-full p-2vw bg-white col-center'>
         <h1 className='text-[1.2vw] font-medium'>READY TO TRY OUR SERVICES?</h1>
-        {/* <button class="bg-orange-500 text-white p-[0.9vw] mt-[2vw] rounded-full hover:bg-orange-600 hover:text-white transition-all duration-300">see cleaning service detail</button> */}
         <button className='text-vw bg-orange-500 hover:bg-orange-600 mt-vw text-white hover:text-white transition-all duration-300 p-vw rounded-full w-full max-w-[11vw]'>BOOK NOW</button>
         <div className="w-full bg-gray-100 mt-2vw flex">
             <section className="w-full max-w-[30vw] p-2vw">
