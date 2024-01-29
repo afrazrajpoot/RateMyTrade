@@ -154,79 +154,115 @@ const BookingForm = () => {
   };
 
   return (
-    <div style={{backgroundImage: `url(${Background})`, height: "120vh", width: "100%",
-    backgroundSize: "cover", backgroundRepeat: "no-repeat"}}> 
-    <div class="container mx-auto sm:px-4">
-    <div class="flex flex-wrap ">
-        <div class="md:w-1/2 pr-4 pl-4 md:mx-1/4 border p-6 mt-3 shadow bg-gray-100 opacity-75">
-            <div class="w-full">
-                <h3 class="fw-normal text-gray-600 fs-4 uppercase mb-2">Schedule Appointment</h3>
-            </div>
-            <form action="post" onSubmit={handleSubmit} >
-                <div class="flex flex-wrap  g-3">
-                    <div class="md:w-full pr-4 pl-4">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" id="name" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter your Name"
-                         value={formData.name}
-                         onChange={handleChange}
-                         style={{ border: errors.name ? '1px ridge red' : '' }}
-                         />
-                        {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
-                    </div>
-                    <div class="md:w-1/2 pr-4 pl-4">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" id="email" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter your Email"
-                           value={formData.email}
-                           onChange={handleChange}
-                           style={{ border: errors.email ? '1px ridge red' : '' }}/>
-                        {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-                    </div>
-                    <div class="md:w-1/2 pr-4 pl-4">
-                        <label class="form-label">Phone</label>
-                        <input type="tel" name="phone" id="phone" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter your Phone Number"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        style={{ border: errors.phone ? '1px ridge red' : ''}}
-                        />
-                        {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
-                    </div>
-                    <div class="md:w-full pr-4 pl-4">
-                        <label class="form-label">Date</label>
-                        <input type="date" name="date" value={formData.date} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter Date"
-                          style={{ border: errors.date ? '1px ridge red' : '' }}
-                        />
-                        {errors.date && <span style={{ color: 'red' }}>{errors.date}</span>}
-                    </div>
-                    <div class="md:w-1/2 pr-4 pl-4">
-                        <label class="form-label">Start Time</label>
-                        <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter Time"
-                          style={{ border: errors.startTime ? '1px ridge red' : '' }}
-                        />
-                        {errors.startTime && <span style={{ color: 'red' }}>{errors.startTime}</span>}
-                    </div>
-                    <div class="md:w-1/2 pr-4 pl-4">
-                        <label class="form-label">End Time</label>
-                        <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter Time"
-                          style={{ border: errors.endTime ? '1px ridge red' : '' }}
-                        />
-                        {errors.endTime && <span style={{ color: 'red' }}>{errors.endTime}</span>}
-                    </div>
-                    <div class="w-full">
-                        <label class="form-label">Additional Information</label>
-                        <textarea rows={3} name="addInfo" value={formData.addInfo} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3 mb-2" placeholder="Enter Additional Information"></textarea>
-                    </div>
-                    <div class="w-full mt-5">                        
-                        <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600 text-gray-900 float-end border-2 mb-2">Book Now</button>
-                        <Link to={`/tradesman/book-appointment/${id}`}>
-                          <button type="button" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-gray-600 border-gray-600 hover:bg-gray-600 hover:text-white bg-white hover:bg-gray-700 float-end me-2 border-2 mb-2">Cancel</button>
-                        </Link>
-                    </div>
-                </div>
-            </form>
+    <div style={{ backgroundImage: `url(${Background})`, height: "120vh", width: "100%", backgroundSize: "cover", backgroundRepeat: "no-repeat" }}>
+  <div className="">
+    <div className="flex justify-center items-center h-full">
+      <div className="bg-gray-100 opacity-75 p-4 mt-5 border shadow-md w-full md:w-1/2">
+        <div className="col-12">
+          <h3 className="fw-normal text-secondary text-lg uppercase mb-2">Schedule Appointment</h3>
         </div>
+        <form action="post" onSubmit={handleSubmit} className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.name ? 'bg-rose-200' : ''}`}
+                placeholder="Enter your Name"
+              />
+              {errors.name && <div className="text-red-500">{errors.name}</div>}
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.email ? 'bg-rose-200' : ''}`}
+                placeholder="Enter your Email"
+              />
+              {errors.email && <div className="text-red-500">{errors.email}</div>}
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.phone ? 'bg-rose-200' : ''}`}
+                placeholder="Enter your Phone Number"
+              />
+              {errors.phone && <div className="text-red-500">{errors.phone}</div>}
+            </div>
+            <div>
+              <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.date ? 'bg-rose-200' : ''}`}
+                placeholder="Enter Date"
+              />
+              {errors.date && <div className="text-red-500">{errors.date}</div>}
+            </div>
+            <div>
+              <label htmlFor="startTime" className="block text-sm font-medium text-gray-700">Start Time</label>
+              <input
+                type="time"
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.startTime ? 'bg-rose-200' : ''}`}
+                placeholder="Enter Time"
+              />
+              {errors.startTime && <div className="text-red-500">{errors.startTime}</div>}
+            </div>
+            <div>
+              <label htmlFor="endTime" className="block text-sm font-medium text-gray-700">End Time</label>
+              <input
+                type="time"
+                name="endTime"
+                value={formData.endTime}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.endTime ? 'bg-rose-200' : ''}`}
+                placeholder="Enter Time"
+              />
+              {errors.endTime && <div className="text-red-500">{errors.endTime}</div>}
+            </div>
+            <div>
+              <label htmlFor="addInfo" className="block text-sm font-medium text-gray-700">Additional Information</label>
+              <textarea
+                rows={3}
+                name="addInfo"
+                value={formData.addInfo}
+                onChange={handleChange}
+                className={`mt-1 p-2 border border-black-on-active border-3 w-full ${errors.addInfo ? 'bg-rose-200' : ''}`}
+                placeholder="Enter Additional Information"
+              ></textarea>
+              {errors.addInfo && <div className="text-red-500">{errors.addInfo}</div>}
+            </div>
+          </div>
+          <div className="col-12 mt-5 space-x-2">
+            <button type="submit" className="rounded-full bg-orange-500 hover:bg-orange-600 text-white hover:text-white transition  duration-300 p-[0.5vw] mt-[2vw]">Book Now</button>
+            <Link to={`/tradesman/book-appointment/${id}`}>
+              <button type="button" className="rounded-full bg-neutral-500 hover:bg-neutral-600 text-white hover:text-white transition  duration-300 p-[0.5vw] mt-[2vw]">Cancel</button>
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
-</div>
+
    
   );
 };

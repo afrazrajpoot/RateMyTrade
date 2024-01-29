@@ -36,7 +36,7 @@ const BookingPage = () => {
             </div>{" "}
             <div class="relative">
               {" "}
-              <div class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+              <div class="w-48 h-48 bg-transparent mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center">
                 <img
                   src={data?.image ? data?.image : "/img/man.png"}
                   class="img-fluid w-full max-w-[14vw] rounded-full h-[14vw]"
