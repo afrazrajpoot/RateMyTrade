@@ -156,69 +156,69 @@ const BookingForm = () => {
   return (
     <div style={{backgroundImage: `url(${Background})`, height: "120vh", width: "100%",
     backgroundSize: "cover", backgroundRepeat: "no-repeat"}}> 
-    <div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3 border p-4 mt-3 shadow bg-light opacity-75">
-            <div class="col-12">
-                <h3 class="fw-normal text-secondary fs-4 text-uppercase mb-2">Schedule Appointment</h3>
+    <div class="container mx-auto sm:px-4">
+    <div class="flex flex-wrap ">
+        <div class="md:w-1/2 pr-4 pl-4 md:mx-1/4 border p-6 mt-3 shadow bg-gray-100 opacity-75">
+            <div class="w-full">
+                <h3 class="fw-normal text-gray-600 fs-4 uppercase mb-2">Schedule Appointment</h3>
             </div>
             <form action="post" onSubmit={handleSubmit} >
-                <div class="row g-3">
-                    <div class="col-md-12">
+                <div class="flex flex-wrap  g-3">
+                    <div class="md:w-full pr-4 pl-4">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" id="name" class="form-control border--black-on-active border-3" placeholder="Enter your Name"
+                        <input type="text" name="name" id="name" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter your Name"
                          value={formData.name}
                          onChange={handleChange}
                          style={{ border: errors.name ? '1px ridge red' : '' }}
                          />
                         {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
                     </div>
-                    <div class="col-md-6">
+                    <div class="md:w-1/2 pr-4 pl-4">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" id="email" class="form-control border--black-on-active border-3" placeholder="Enter your Email"
+                        <input type="email" name="email" id="email" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter your Email"
                            value={formData.email}
                            onChange={handleChange}
                            style={{ border: errors.email ? '1px ridge red' : '' }}/>
                         {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
                     </div>
-                    <div class="col-md-6">
+                    <div class="md:w-1/2 pr-4 pl-4">
                         <label class="form-label">Phone</label>
-                        <input type="tel" name="phone" id="phone" class="form-control border--black-on-active border-3" placeholder="Enter your Phone Number"
+                        <input type="tel" name="phone" id="phone" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter your Phone Number"
                         value={formData.phone}
                         onChange={handleChange}
                         style={{ border: errors.phone ? '1px ridge red' : ''}}
                         />
                         {errors.phone && <div style={{ color: 'red' }}>{errors.phone}</div>}
                     </div>
-                    <div class="col-md-12">
+                    <div class="md:w-full pr-4 pl-4">
                         <label class="form-label">Date</label>
-                        <input type="date" name="date" value={formData.date} onChange={handleChange} class="form-control border--black-on-active border-3" placeholder="Enter Date"
+                        <input type="date" name="date" value={formData.date} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter Date"
                           style={{ border: errors.date ? '1px ridge red' : '' }}
                         />
                         {errors.date && <span style={{ color: 'red' }}>{errors.date}</span>}
                     </div>
-                    <div class="col-md-6">
+                    <div class="md:w-1/2 pr-4 pl-4">
                         <label class="form-label">Start Time</label>
-                        <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} class="form-control border--black-on-active border-3" placeholder="Enter Time"
+                        <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter Time"
                           style={{ border: errors.startTime ? '1px ridge red' : '' }}
                         />
                         {errors.startTime && <span style={{ color: 'red' }}>{errors.startTime}</span>}
                     </div>
-                    <div class="col-md-6">
+                    <div class="md:w-1/2 pr-4 pl-4">
                         <label class="form-label">End Time</label>
-                        <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} class="form-control border--black-on-active border-3" placeholder="Enter Time"
+                        <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3" placeholder="Enter Time"
                           style={{ border: errors.endTime ? '1px ridge red' : '' }}
                         />
                         {errors.endTime && <span style={{ color: 'red' }}>{errors.endTime}</span>}
                     </div>
-                    <div class="col-12">
+                    <div class="w-full">
                         <label class="form-label">Additional Information</label>
-                        <textarea rows={3} name="addInfo" value={formData.addInfo} onChange={handleChange} class="form-control border--black-on-active border-3 mb-2" placeholder="Enter Additional Information"></textarea>
+                        <textarea rows={3} name="addInfo" value={formData.addInfo} onChange={handleChange} class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded border--black-on-active border-3 mb-2" placeholder="Enter Additional Information"></textarea>
                     </div>
-                    <div class="col-12 mt-5">                        
-                        <button type="submit" class="btn btn-primary text-dark float-end border-2 mb-2">Book Now</button>
+                    <div class="w-full mt-5">                        
+                        <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600 text-gray-900 float-end border-2 mb-2">Book Now</button>
                         <Link to={`/tradesman/book-appointment/${id}`}>
-                          <button type="button" class="btn btn-outline-secondary float-end me-2 border-2 mb-2">Cancel</button>
+                          <button type="button" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline text-gray-600 border-gray-600 hover:bg-gray-600 hover:text-white bg-white hover:bg-gray-700 float-end me-2 border-2 mb-2">Cancel</button>
                         </Link>
                     </div>
                 </div>
@@ -227,6 +227,7 @@ const BookingForm = () => {
     </div>
 </div>
 </div>
+   
   );
 };
 

@@ -6,62 +6,80 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetTrademanByIdQuery } from "../../store/storeApi";
 
 const BookingPage = () => {
-  
   const { id } = useParams();
   const { data } = useGetTrademanByIdQuery(id);
   const navigate = useNavigate();
   return (
-	<>
-      <div class="content">
-				<div class="container">
-					<div class="card">
-						<div class="card-body">
-							<div class="doctor-widget">
-								<div class="doc-info-left">
-									<div class="doctor-img">
-										<img src={data?.image ? data?.image : "/img/man.png"} class="img-fluid" alt="User"/>
-									</div>
-									<div class="doc-info-cont">
-										<h4 class="doc-name">{data?.username}</h4>
-										<p class="doc-speciality">{data?.occupation}</p>
-										{/* <p class="doc-department"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality"/>Dentist</p> */}
-										<div class="rating">
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star"></i>
-											<span class="d-inline-block average-rating">({data?.ratings})</span>
-										</div>
-										<div class="clinic-details">
-											<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Lahore, Pakistan - <a href="javascript:void(0);">Get Directions</a></p>
-											
-										</div>
-									</div>
-								</div>
-								<div class="doc-info-right">
-									<div class="clini-infos">
-										<ul>
-											<li><i class="far fa-thumbs-up"></i> 99%</li>
-											<li><i class="far fa-comment"></i> {data?.ratings} Feedback</li>
-											<li><i class="fas fa-map-marker-alt"></i> {data?.location}</li>
-											<li><i class="far fa-money-bill-alt"></i> Rs. {data?.hourlyRate} per hour </li>
-										</ul>
-									</div>
-									<div class="clinic-booking">
-										<button class="apt-btn btn btn-success" onClick={() =>
-                      navigate(
-                        `/tradesman/book-appointment/${data?._id}/booking-form`
-                      )
-                    }>Book Appointment</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+    <>
+      <div class="p-16">
+        <div class="p-8 bg-white shadow mt-20">
+          {" "}
+          <div class="grid grid-cols-1 md:grid-cols-3">
+            {" "}
+            <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
+              {" "}
+              <div>
+                {" "}
+                <p class="font-bold text-yellow-400 text-xl">
+                  {data?.ratings}
+				  <i class="fas fa-star filled"></i>
+                </p>{" "}
+                <p class="text-gray-400">Rating</p>{" "}
+              </div>{" "}
+              <div>
+                {" "}
+                <p class="font-bold text-green-600 text-xl">
+                  {data?.hourlyRate} PKR
+                </p>{" "}
+                <p class="text-gray-400">Rate per hour</p>{" "}
+              </div>{" "}
+            </div>{" "}
+            <div class="relative">
+              {" "}
+              <div class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+                <img
+                  src={data?.image ? data?.image : "/img/man.png"}
+                  class="img-fluid w-full max-w-[14vw] rounded-full h-[14vw]"
+                  alt="User"
+                />
+              </div>{" "}
+            </div>{" "}
+            <div class="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
+              <button
+                onClick={() =>
+                  navigate(
+                    `/tradesman/book-appointment/${data?._id}/booking-form`
+                  )
+                }
+                class="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+              >
+                {" "}
+                Book Now
+              </button>{" "}
+              <button class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                {" "}
+                Message
+              </button>{" "}
+            </div>{" "}
+          </div>{" "}
+          <div class="mt-20 text-center border-b pb-12">
+            {" "}
+            <h1 class="text-4xl font-medium text-gray-700">
+              {data?.username}
+            </h1>{" "}
+            <p class="font-light text-gray-600 mt-3">{data?.occupation}</p>{" "}
+            <p class="mt-8 text-gray-500">{data?.location}</p>{" "}
+            <p class="mt-2 text-gray-500">({data?.ratings}) Reviews</p>{" "}
+          </div>{" "}
+          <div class="mt-8 flex flex-col justify-center">
+            {" "}
+            <p class="text-gray-600 text-center font-light lg:px-16">
+              {data?.description}
+            </p>{" "}
+          </div>
         </div>
       </div>
-	</>
+    </>
   );
 };
 
