@@ -115,7 +115,7 @@ const BookingForm = () => {
           }
         );
 
-        if (response.ok) {
+        if (response.status(201)) {
           console.log("Form data submitted successfully");
           // Optionally, reset the form after successful submission
           setFormData({
