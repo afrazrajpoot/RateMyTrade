@@ -1,7 +1,20 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../store/storeApi";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const [loginUser] = useLoginUserMutation();
+  const navigate = useNavigate()
+
+  const showToast = (message, type) => {
+    toast[type](message, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+    });
+};
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -50,6 +63,28 @@ const Login = () => {
 
     if (validateForm()) {
       console.log("Form data saved:", formData);
+      try {
+        const response = await loginUser(formData);
+        console.log(response.data, "response");
+        localStorage.setItem("tokken", JSON.stringify(response.data.token));
+        const fetchDetails = await axios.get(
+          "http://localhost:5000/api/v1/getDetails",
+          {
+            headers: {
+              Authorization: `Bearer ${response.data.token}`,
+            },
+          }
+        );
+        const userLoginInfo = fetchDetails?.data;
+        localStorage.setItem("userLoginInfo", JSON.stringify(userLoginInfo));
+        showToast("Successfully Logged In", "success");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+      } catch (error) {
+        console.error("Error during login:", error);
+        // showToast('An unexpected error occurred. Please try again.', 'error');
+      }
     }
   };
   return (
@@ -60,7 +95,7 @@ const Login = () => {
             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
               Sign in to your account
             </h1>
-            <form class="space-y-4 md:space-y-6" action="#">
+            <form class="space-y-4 md:space-y-6" action="POST">
               <div>
                 <label
                   for="email"

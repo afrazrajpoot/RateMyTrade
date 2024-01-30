@@ -13,6 +13,7 @@ import Register from './app/pages/Register'
 import Navbar2 from './app/Component/Navbar-2'
 import BookingPage from './app/pages/Booking/BookingPage'
 import BookingForm from './app/pages/Booking/BookingForm'
+import Checkout from './app/pages/Payment/Checkout'
 
 const App = () => {
   return (
@@ -32,9 +33,13 @@ const App = () => {
           path="/tradesman/book-appointment/:id"
           element={<BookingPage />}
         />
-                <Route
+        <Route
           path="/tradesman/book-appointment/:id/booking-form"
           element={<BookingForm />}
+        />
+        <Route
+          path="/tradesman/book-appointment/:id/booking-form/checkout"
+          element={<Checkout />}
         />
       </Routes>
 
