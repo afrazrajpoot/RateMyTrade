@@ -128,7 +128,7 @@ const BookingForm = () => {
             addInfo: "",
             // Reset other form fields
           });
-          showToast("Booking saved successfully", "success");
+          // showToast("Booking saved successfully", "success");
           navigate("/");
         } else {
           console.error("Failed to submit form data");
