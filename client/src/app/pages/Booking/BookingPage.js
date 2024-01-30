@@ -51,10 +51,10 @@ const BookingPage = () => {
                     `/tradesman/book-appointment/${data?._id}/booking-form`
                   )
                 }
-                class="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                class="text-white py-2 px-4 uppercase rounded bg-orange-400 hover:bg-orange-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
               >
                 {" "}
-                Book Now
+                Book Appointment
               </button>{" "}
               <button class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
                 {" "}
