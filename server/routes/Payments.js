@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 
 router.post('/create-checkout-session', async (req, res) => {
+    const data = req.body
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -12,9 +13,9 @@ router.post('/create-checkout-session', async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Your Product',
+              name: data?.username
             },
-            unit_amount: 1000, // in cents
+            unit_amount: 100, // in cents
           },
           quantity: 1,
         },

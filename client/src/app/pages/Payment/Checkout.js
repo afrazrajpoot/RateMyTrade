@@ -1,7 +1,8 @@
 import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useGetTrademanByIdQuery } from "../../store/storeApi";
-import { useStripe } from "../../StripeContext/StripeContext";
+// import { useStripe } from './../../StripeContext/StripeContext';
+import { loadStripe } from '@stripe/stripe-js';
 
 
 const Checkout = () => {
@@ -18,16 +19,19 @@ const Checkout = () => {
 
   const totalAmount = data?.hourlyRate * durationInHours
 
-  const stripe = useStripe();
+  // const stripe = useStripe();
 
   const handleCheckout = async () => {
+    const stripe = await loadStripe('pk_test_51NO0eJITaueKIebSFIUc8DRJuY3i04evrwu2qipVRiIkwS1X6YMomm4SaQnbtSNh5l3fZBDfnt7gF250ss8CO6LB00Gns9ok1i')
     const key = process.env.SECRET_KEY;
     console.log(stripe)
     const response = await fetch("http://localhost:5000/api/v1/payment/create-checkout-session", {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         Authorization: 'Bearer sk_test_51NO0eJITaueKIebSG63NCL9BrtB8DKE3LretZtwB3ErDzj68x0yVhCVBx0RnKq9ujIposYRpeus0VeOfSBssMrV400ajOwtvCb',
-      }
+      },
+      body: JSON.stringify(data)
     });
     const session = await response.json();
 
