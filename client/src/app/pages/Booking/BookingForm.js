@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -116,7 +116,8 @@ const BookingForm = () => {
         );
 
         if (response.ok) {
-          console.log("Form data submitted successfully");
+          console.log("Form data submitted successfully",formData);
+          navigate(`/tradesman/book-appointment/${id}/checkout`, { state: formData });
           // Optionally, reset the form after successful submission
           setFormData({
             name: "",
@@ -129,7 +130,6 @@ const BookingForm = () => {
             // Reset other form fields
           });
           // showToast("Booking saved successfully", "success");
-          navigate("/tradesman/book-appointment/:id/booking-form/checkout");
         } else {
           console.error("Failed to submit form data");
         }

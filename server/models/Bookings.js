@@ -9,7 +9,8 @@ const bookingSchema = new mongoose.Schema({
     date: Date,
     startTime: String,
     endTime: String,
-    addInfo: String
+    addInfo: String,
+    paymentStatus: String
 },
 { timestamps: true }
 );

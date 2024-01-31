@@ -1,53 +1,123 @@
-import React from 'react'
+import React from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useGetTrademanByIdQuery } from "../../store/storeApi";
+import { useStripe } from "../../StripeContext/StripeContext";
+
 
 const Checkout = () => {
-  return (
-    <div class="container mx-auto p4-10">
-    <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-xl">
-        <div class="md:flex">
-            <div class="w-full px-6 py-8 md:p-8">
-                <h2 class="text-2xl font-bold text-gray-800">Checkout</h2>
-                <p class="mt-4 text-gray-600">Please fill out the form below to complete your booking.</p>
-                <form class="mt-5">
-                    <div class="mb-3">
-                        <label class="block text-gray-800 font-bold mb-2" for="name">
-                            Name
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Enter your name"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-gray-800 font-bold mb-2" for="email">
-                            Email
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="name@example.com"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-gray-800 font-bold mb-2" for="card_number">
-                            Card Number
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="card_number" type="text" placeholder="**** **** **** 1234"/>
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-gray-800 font-bold mb-2" for="expiration_date">
-                            Expiration Date
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="expiration_date" type="date" placeholder="MM / YY"/>
-                    </div>
-                    <div class="mb-5">
-                        <label class="block text-gray-800 font-bold mb-2" for="cvv">
-                            CVV
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="cvv" type="text" placeholder="***"/>
-                    </div>
-                    <button class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                        Submit
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-  )
-}
+  const { id } = useParams();
+  const { data } = useGetTrademanByIdQuery(id);
+  const location = useLocation();
+  const formData = location.state;
 
-export default Checkout
+
+  const startDate = new Date(`January 1, 2024 ${formData.startTime}`);
+  const endDate = new Date(`January 1, 2024 ${formData.endTime}`);
+  const timeDifference = endDate - startDate;
+  const durationInHours = Math.floor(timeDifference / (1000 * 60 * 60));
+
+  const totalAmount = data?.hourlyRate * durationInHours
+
+  const stripe = useStripe();
+
+  const handleCheckout = async () => {
+    const key = process.env.SECRET_KEY;
+    console.log(stripe)
+    const response = await fetch("http://localhost:5000/api/v1/payment/create-checkout-session", {
+      method: "POST",
+      headers: {
+        Authorization: 'Bearer sk_test_51NO0eJITaueKIebSG63NCL9BrtB8DKE3LretZtwB3ErDzj68x0yVhCVBx0RnKq9ujIposYRpeus0VeOfSBssMrV400ajOwtvCb',
+      }
+    });
+    const session = await response.json();
+
+    // Redirect to Checkout
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.error(result.error.message);
+    }
+  };
+
+  return (
+    <section class="flex items-center py-16 bg-gray-100 md:py-20 font-poppins dark:bg-gray-800 ">
+      <div class="justify-center flex-1 max-w-6xl px-4 py-4 mx-auto bg-white border rounded-md dark:border-gray-900 dark:bg-gray-900 md:py-10 md:px-10">
+        <div>
+          <h1 class="px-4 mb-8 text-2xl font-semibold tracking-wide text-gray-700 dark:text-gray-300 ">
+            Thank you. Your booking has been saved.{" "}
+          </h1>
+          <div class="flex border-b border-gray-200 dark:border-gray-700  items-stretch justify-start w-full h-full px-4 mb-8 md:flex-row xl:flex-col md:space-x-6 lg:space-x-8 xl:space-x-0">
+            <div class="flex items-start justify-start flex-shrink-0">
+              <div class="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
+                {/* <img src="https://i.postimg.cc/RhQYkKYk/pexels-italo-melo-2379005.jpg" class="object-cover w-16 h-16 rounded-md" alt="avatar"/> */}
+                <div class="flex flex-col items-start justify-start space-y-2">
+                  <p class="text-lg font-semibold leading-4 text-left text-gray-800 dark:text-gray-400">
+                    {formData?.name}
+                  </p>
+                  <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">
+                    {formData?.phone}
+                  </p>
+                  <p class="text-sm leading-4 cursor-pointer dark:text-gray-400">
+                    {formData?.email}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center pb-4 mb-10 border-b border-gray-200 dark:border-gray-700">
+            <div class="w-full px-4 mb-4 md:w-1/4">
+              <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                Booking Date{" "}
+              </p>
+              <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                {formData?.date}
+              </p>
+            </div>
+            <div class="w-full px-4 mb-4 md:w-1/4">
+              <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                Booking Time{" "}
+              </p>
+              <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                {formData?.startTime} - {formData.endTime}
+              </p>
+            </div>
+            <div class="w-full px-4 mb-4 md:w-1/4">
+            <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                Hourly Rate{" "}
+              </p>
+              <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                {data?.hourlyRate} PKR
+              </p>
+            </div>
+          </div>
+          <div class="px-4 mb-10">
+            <div class="flex flex-col items-stretch justify-center w-full space-y-4 md:flex-row md:space-y-0 md:space-x-8">
+              <div class="flex flex-col w-full space-y-6 ">
+                <div class="flex items-center justify-between w-full">
+                  <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
+                    Total
+                  </p>
+                  <p class="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">
+                    Rs. {totalAmount}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center justify-start gap-4 px-4 mt-6 ">
+            <button class="w-full px-4 py-2 text-orange-500 border border-orange-500 rounded-md md:w-auto hover:text-gray-100 hover:bg-orange-600">
+              Go back to booking
+            </button>
+            <button  onClick={handleCheckout} class="w-full px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-md text-gray-50 md:w-auto">
+              Proceed to Payment
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Checkout;

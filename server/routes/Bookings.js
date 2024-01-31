@@ -17,7 +17,8 @@ router.post("/book-appointment/:id", authenticateJWT, async function(req,res){
             endTime: (req.body.endTime),
             userId: req.user._id,
             tradesmanId: req.params.id,
-            addInfo: req.body.addInfo
+            addInfo: req.body.addInfo,
+            paymentStatus: 'Pending'
         };
         const today = new Date();
         today.setHours(0, 0, 0, 0);

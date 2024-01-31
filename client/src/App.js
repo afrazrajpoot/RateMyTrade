@@ -38,7 +38,7 @@ const App = () => {
           element={<BookingForm />}
         />
         <Route
-          path="/tradesman/book-appointment/:id/booking-form/checkout"
+          path="/tradesman/book-appointment/:id/checkout"
           element={<Checkout />}
         />
       </Routes>
