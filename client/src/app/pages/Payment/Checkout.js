@@ -1,9 +1,8 @@
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useGetTrademanByIdQuery } from "../../store/storeApi";
 // import { useStripe } from './../../StripeContext/StripeContext';
-import { loadStripe } from '@stripe/stripe-js';
-
+import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
   const { id } = useParams();
@@ -11,28 +10,44 @@ const Checkout = () => {
   const location = useLocation();
   const formData = location.state;
 
-
   const startDate = new Date(`January 1, 2024 ${formData.startTime}`);
   const endDate = new Date(`January 1, 2024 ${formData.endTime}`);
   const timeDifference = endDate - startDate;
   const durationInHours = Math.floor(timeDifference / (1000 * 60 * 60));
 
-  const totalAmount = data?.hourlyRate * durationInHours
+  const totalAmount = data?.hourlyRate * durationInHours;
 
   // const stripe = useStripe();
+  const convertTo12HourFormat = (time) => {
+    const timeArray = time.split(":");
+    const hours = parseInt(timeArray[0], 10);
+    const minutes = timeArray[1];
+    const period = hours >= 12 ? "PM" : "AM";
+    const twelveHourFormat = ((hours + 11) % 12) + 1;
+
+    return `${twelveHourFormat}:${minutes} ${period}`;
+  };
+  const start12HourFormat = convertTo12HourFormat(formData.startTime);
+  const end12HourFormat = convertTo12HourFormat(formData.endTime);
 
   const handleCheckout = async () => {
-    const stripe = await loadStripe('pk_test_51NO0eJITaueKIebSFIUc8DRJuY3i04evrwu2qipVRiIkwS1X6YMomm4SaQnbtSNh5l3fZBDfnt7gF250ss8CO6LB00Gns9ok1i')
+    const stripe = await loadStripe(
+      "pk_test_51NO0eJITaueKIebSFIUc8DRJuY3i04evrwu2qipVRiIkwS1X6YMomm4SaQnbtSNh5l3fZBDfnt7gF250ss8CO6LB00Gns9ok1i"
+    );
     const key = process.env.SECRET_KEY;
-    console.log(stripe)
-    const response = await fetch("http://localhost:5000/api/v1/payment/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: 'Bearer sk_test_51NO0eJITaueKIebSG63NCL9BrtB8DKE3LretZtwB3ErDzj68x0yVhCVBx0RnKq9ujIposYRpeus0VeOfSBssMrV400ajOwtvCb',
-      },
-      body: JSON.stringify(data)
-    });
+    console.log(stripe);
+    const response = await fetch(
+      "http://localhost:5000/api/v1/payment/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Bearer sk_test_51NO0eJITaueKIebSG63NCL9BrtB8DKE3LretZtwB3ErDzj68x0yVhCVBx0RnKq9ujIposYRpeus0VeOfSBssMrV400ajOwtvCb",
+        },
+        body: JSON.stringify({data, totalAmount}),
+      }
+    );
     const session = await response.json();
 
     // Redirect to Checkout
@@ -84,11 +99,11 @@ const Checkout = () => {
                 Booking Time{" "}
               </p>
               <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
-                {formData?.startTime} - {formData.endTime}
+                {start12HourFormat} - {end12HourFormat}
               </p>
             </div>
             <div class="w-full px-4 mb-4 md:w-1/4">
-            <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+              <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                 Hourly Rate{" "}
               </p>
               <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
@@ -111,10 +126,15 @@ const Checkout = () => {
             </div>
           </div>
           <div class="flex flex-wrap items-center justify-start gap-4 px-4 mt-6 ">
-            <button class="w-full px-4 py-2 text-orange-500 border border-orange-500 rounded-md md:w-auto hover:text-gray-100 hover:bg-orange-600">
-              Go back to booking
-            </button>
-            <button  onClick={handleCheckout} class="w-full px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-md text-gray-50 md:w-auto">
+            <Link to={`/tradesman/book-appointment/${id}`}>
+              <button class="w-full px-4 py-2 text-orange-500 border border-orange-500 rounded-md md:w-auto hover:text-gray-100 hover:bg-orange-600">
+                Go back to booking
+              </button>
+            </Link>
+            <button
+              onClick={handleCheckout}
+              class="w-full px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-md text-gray-50 md:w-auto"
+            >
               Proceed to Payment
             </button>
           </div>

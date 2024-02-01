@@ -119,16 +119,16 @@ const BookingForm = () => {
           console.log("Form data submitted successfully",formData);
           navigate(`/tradesman/book-appointment/${id}/checkout`, { state: formData });
           // Optionally, reset the form after successful submission
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            date: "",
-            startTime: "",
-            endTime: "",
-            addInfo: "",
-            // Reset other form fields
-          });
+          // setFormData({
+          //   name: "",
+          //   email: "",
+          //   phone: "",
+          //   date: "",
+          //   startTime: "",
+          //   endTime: "",
+          //   addInfo: "",
+          //   // Reset other form fields
+          // });
           // showToast("Booking saved successfully", "success");
         } else {
           console.error("Failed to submit form data");
