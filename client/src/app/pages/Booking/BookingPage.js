@@ -9,6 +9,7 @@ const BookingPage = () => {
   const { id } = useParams();
   const { data } = useGetTrademanByIdQuery(id);
   const navigate = useNavigate();
+
   return (
     <>
       <div class="p-16">

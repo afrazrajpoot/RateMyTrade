@@ -35,7 +35,8 @@ router.post("/book-appointment/:id", authenticateJWT, async function(req,res){
         }
         var booking = new Booking(newBooking)
         await booking.save();
-        res.status(200).send('Booking saved successfully');
+        // res.status(200).send('Booking saved successfully');
+        res.status(200).json({ bookingId: booking._id });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');

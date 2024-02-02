@@ -9,6 +9,7 @@ const Checkout = () => {
   const { data } = useGetTrademanByIdQuery(id);
   const location = useLocation();
   const formData = location.state;
+  const bookingId = location.state;
 
   const startDate = new Date(`January 1, 2024 ${formData.startTime}`);
   const endDate = new Date(`January 1, 2024 ${formData.endTime}`);
@@ -31,10 +32,9 @@ const Checkout = () => {
   const end12HourFormat = convertTo12HourFormat(formData.endTime);
 
   const handleCheckout = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51NO0eJITaueKIebSFIUc8DRJuY3i04evrwu2qipVRiIkwS1X6YMomm4SaQnbtSNh5l3fZBDfnt7gF250ss8CO6LB00Gns9ok1i"
-    );
-    const key = process.env.SECRET_KEY;
+    const publishKey = 'pk_test_51NO0eJITaueKIebSFIUc8DRJuY3i04evrwu2qipVRiIkwS1X6YMomm4SaQnbtSNh5l3fZBDfnt7gF250ss8CO6LB00Gns9ok1i'
+    const stripe = await loadStripe(publishKey);
+    const secretKey = 'sk_test_51NO0eJITaueKIebSG63NCL9BrtB8DKE3LretZtwB3ErDzj68x0yVhCVBx0RnKq9ujIposYRpeus0VeOfSBssMrV400ajOwtvCb'
     console.log(stripe);
     const response = await fetch(
       "http://localhost:5000/api/v1/payment/create-checkout-session",
@@ -43,22 +43,43 @@ const Checkout = () => {
         headers: {
           "Content-Type": "application/json",
           Authorization:
-            "Bearer sk_test_51NO0eJITaueKIebSG63NCL9BrtB8DKE3LretZtwB3ErDzj68x0yVhCVBx0RnKq9ujIposYRpeus0VeOfSBssMrV400ajOwtvCb",
+            `Bearer ${secretKey}`,
         },
-        body: JSON.stringify({data, totalAmount}),
+        body: JSON.stringify({data, totalAmount, bookingId}),
       }
     );
     const session = await response.json();
-
+    console.log(data?._id)
     // Redirect to Checkout
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
-    });
+  }).then(function() {
+      updatePaymentStatus(session.id)
+  });
 
     if (result.error) {
       console.error(result.error.message);
     }
   };
+  const updatePaymentStatus = async (sessionID) => {
+    try {
+        const response = await fetch(
+            "http://localhost:5000/api/v1/payment/update-payment-status",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ sessionID }),
+            }
+        );
+
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error("Error updating payment status:", error);
+    }
+};
 
   return (
     <section class="flex items-center py-16 bg-gray-100 md:py-20 font-poppins dark:bg-gray-800 ">

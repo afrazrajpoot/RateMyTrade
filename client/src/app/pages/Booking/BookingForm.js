@@ -116,8 +116,10 @@ const BookingForm = () => {
         );
 
         if (response.ok) {
-          console.log("Form data submitted successfully",formData);
-          navigate(`/tradesman/book-appointment/${id}/checkout`, { state: formData });
+          const responseData = await response.json();
+          const bookingId = responseData.bookingId;
+          console.log("Form data submitted successfully. Booking ID:", bookingId);
+          navigate(`/tradesman/book-appointment/${id}/checkout`, { state: {...formData, bookingId} });
           // Optionally, reset the form after successful submission
           // setFormData({
           //   name: "",
