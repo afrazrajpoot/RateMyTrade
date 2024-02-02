@@ -53,9 +53,7 @@ const Checkout = () => {
     // Redirect to Checkout
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
-  }).then(function() {
-      updatePaymentStatus(session.id)
-  });
+  })
 
     if (result.error) {
       console.error(result.error.message);
