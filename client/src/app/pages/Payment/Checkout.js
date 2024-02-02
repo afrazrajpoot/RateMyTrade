@@ -49,7 +49,7 @@ const Checkout = () => {
       }
     );
     const session = await response.json();
-    console.log(data?._id)
+    
     // Redirect to Checkout
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
@@ -58,26 +58,26 @@ const Checkout = () => {
     if (result.error) {
       console.error(result.error.message);
     }
+    // const updatePaymentStatus = async (sessionID) => {
+    //   try {
+    //       const response = await fetch(
+    //           "http://localhost:5000/api/v1/payment/update-payment-status",
+    //           {
+    //               method: "POST",
+    //               headers: {
+    //                   "Content-Type": "application/json",
+    //               },
+    //               body: JSON.stringify({ sessionID }),
+    //           }
+    //       );
+    
+    //       const data = await response.json();
+    //       console.log(data);
+    //   } catch (error) {
+    //       console.error("Error updating payment status:", error);
+    //   }
+    // };
   };
-  const updatePaymentStatus = async (sessionID) => {
-    try {
-        const response = await fetch(
-            "http://localhost:5000/api/v1/payment/update-payment-status",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ sessionID }),
-            }
-        );
-
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error("Error updating payment status:", error);
-    }
-};
 
   return (
     <section class="flex items-center py-16 bg-gray-100 md:py-20 font-poppins dark:bg-gray-800 ">
