@@ -7,6 +7,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
+      writeConcern: { w: 1 }
     });
     // mongoose.set('strictQuery', false);
     console.log('MongoDB connected');

@@ -1,23 +1,21 @@
 const mongoose = require('mongoose');
 
 const tradesMenSchema = new mongoose.Schema({
-  userinfo: Object,
-    occupation: String,
-    username: String,
-    email: String,
-    ratings: Number,
-    hourlyRate: Number,
-    description: String,
-    location: String,
-    lat: Number,
-    lng: Number,
-    phoneNumber: Number,
-    availability: String,
-    gigTitle: String,
-    gigDescription: String,
-    image: {
-      type: String,
-      },
+  // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  username:{
+    type:String
+  },
+  lat: Number, 
+  lng:Number,
+  tradeType: String,
+  location:String,
+  phoneNumber: Number,
+  description: String,
+   
+    image:{
+      type:String
+    },
     gigImage1:{
       type: String,
     },
@@ -25,15 +23,6 @@ const tradesMenSchema = new mongoose.Schema({
       type: String,
     },
     gigImage3:{
-      type: String,
-    },
-    video:{
-      type: String,
-    },
-    docs1:{
-      type: String,
-    },
-    docs2:{
       type: String,
     },
   }, {timestamps: true})

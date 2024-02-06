@@ -20,9 +20,9 @@ const ProfileCards = () => {
     return <h1>Loading...</h1>;
   }
   if (isError) {
-    return <h1>Error</h1>;
+    return <h1>{isError.message}</h1>;
   }
-
+console.log("hyby",data)
   const CustomPrevArrow = (props) => (
     <span {...props} className="text-vw text-black absolute cursor-pointer top-[8vw] left-0vw z-50">
     <FontAwesomeIcon icon={faArrowLeft} className='text-2vw text-black  rounded-full hover:bg-gray-100 bg-white p-[0.7vw] text-center' />
@@ -42,8 +42,8 @@ const settings = { dots: false, prevArrow: <CustomPrevArrow />, nextArrow: <Cust
       <div className="pl-2vw">
       <div className="grid w-full gap-vw m-vw  grid-cols-1">
       <Slider {...settings}>
-      {data?.map((card) => (
-        <TradesmanCard key={card.id} username={card?.username} image={card?.image} occupation={card?.occupation} />
+      {data?.profiles?.map((card) => (
+        <TradesmanCard key={card._id} username={card?.username} image={card?.image} occupation={card?.tradeType} id={card._id} />
       ))}
       </Slider>
       </div>

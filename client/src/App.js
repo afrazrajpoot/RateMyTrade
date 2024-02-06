@@ -4,16 +4,19 @@ import Home from './app/pages/Mian/Home'
 import About from './app/pages/Mian/About'
 import Profile from './app/pages/Profile'
 import ProfileCards from './app/pages/ProfileCards'
-import SingleProfile from './app/pages/SingleProfile'
+
 import SearchUser from './app/pages/Mian/SearchUser'
 import Register from './app/pages/Auth/Register'
 import Login from './app/pages/Auth/Login'
 import Contact from './app/pages/Mian/Contact'
 import HowItWorks from './app/pages/Mian/HowItWorks'
+import SingleProfile from './app/Component/TradesmanProfile/SingleProfile'
+import Navbar from './app/Component/Common/Navbar'
 
 const App = () => {
   return (
     <>
+    {/* <Navbar /> */}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />

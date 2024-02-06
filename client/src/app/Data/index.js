@@ -268,6 +268,15 @@ export const handymanFooter =[
   export const tradesmanProfileForm = [
     {
       type:"text",
+      name:"username",
+      lable:"Username",
+      placeholder:"username",
+      rules: {
+        required: 'username is required',
+      }
+    },
+    {
+      type:"text",
       name:"tradeType",
       lable:"Trade Type",
       placeholder:"Trade Type",
@@ -388,3 +397,4 @@ export const servicesCards = [
     img: "https://images.pexels.com/photos/15032623/pexels-photo-15032623.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
   },
 ];
+export const sliderImages = ['/img/aboutCover.jpg', '/img/aboutus.jpg','/images/main1.jpg']

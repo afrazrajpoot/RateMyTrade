@@ -17,19 +17,17 @@ export const UserProvider = ({ children }) => {
   const [tradesmanProfileDetails, setTradesmanProfileDetails] = useState(null);
   const [userDetails, setUserDetails] = useState({firstName: "", lastName: "", password: "", email: "", phoneNumber: null, category: "",});
   const [tradesManProfile, setTradesManProfile] = useState({
-    username: "",
-    email: "",
-    phoneNumber: null,
-    occupation: "",
-    hourlyRate: null,
-    ratings: null,
-    description: "",
+    username:"",
+    tradeType: "",
     location: "",
-    image: "", 
-      lat: "",
-      lng: "",
+    phoneNumber: null,
+    description: "",
+  image:"",
+    gigImage1:'',
+    gigImage2:'',
+    gigImage3:''
   })
-
+const [isLogedUser,setLogedUser] = useState()
   // ----------------------------------------------------------------
   const [selectedChat, setSelectedChat] = useState();
   const [user, setUser] = useState();
@@ -42,8 +40,9 @@ export const UserProvider = ({ children }) => {
   // console.log(userLoginInfo, 'userinfo');
   useEffect(() => {
     const userInfos = JSON.parse(localStorage.getItem("userLoginInfo"));
+    const logInUser  = JSON.parse(localStorage.getItem("tokenabc"));
     setUser(userInfos);
-
+    setLogedUser(logInUser)
     // if (!userInfos) navigate("/login");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
@@ -70,11 +69,11 @@ export const UserProvider = ({ children }) => {
     }
     setTradesManProfileId(user?.id)
   }, [user]);
-  useEffect(() => {
-    if(tradesManProfiles){
-      setTradesmanProfiles(tradesManProfiles)
-    }
-  }, [tradesManProfiles])
+  // useEffect(() => {
+  //   if(tradesManProfiles){
+  //     setTradesmanProfiles(tradesManProfiles)
+  //   }
+  // }, [tradesManProfiles])
   // console.log(tradesmanProfiles, "tradesmanProfiles");
   ;
   useEffect(()=> {
@@ -91,7 +90,7 @@ export const UserProvider = ({ children }) => {
     notification,
     setNotification,
     chats,
-    setChats, query,setQuery}}>
+    setChats, query,setQuery,setTradesManProfile,tradesManProfile,isLogedUser,setLogedUser}}>
       {children}
     </UserContext.Provider>
   );

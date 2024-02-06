@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
   const uploadFiles = upload.single('image');
 
 
-router.route('/signUp').post(uploadFiles ,signUp);
+router.route('/signup').post(uploadFiles,signUp);
 router.route('/login').post(login);
 router.route('/getDetails').get(getUserDetails);
 router.route('/getAllUsers').get(authenticateJWT, allUsers);

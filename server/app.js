@@ -44,7 +44,7 @@ app.get('/api/v1/messages', async (req, res) => {
  }
 })
 
-app.use('/api/v1/', auth);
+app.use('/api/v1/auth', auth);
 app.use('/api/v1/tradesman', tradesmanRoute);
 app.use('/api/v1/chat', chatRoute);
 app.use('/api/v1/message', messageRoute);

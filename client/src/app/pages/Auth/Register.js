@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAddUserMutation } from "../../store/storeApi";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
+
+  const [userInfo,  setUserInfo] = useState({
     firstName: "",
     lastName: "",
-    email: "",
+    category: "",
     password: "",
+    email: "",
+    phoneNumber: "",
     confirmPassword: "",
-    phone: "",
-    userType: "User",
+    image:""
   });
+  // const [userInfo, setUserInfo] = useState({})
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -20,22 +24,29 @@ const Register = () => {
     confirmPassword: "",
     phone: ""
   });
-  const [uploadedImage, setUploadedImage] = useState("/img/avatar.png");
+  const [addUser,{isLoading,isError}] = useAddUserMutation()
 
+  const [uploadedImage, setUploadedImage] = useState("");
+
+
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //       setUserInfo({ ...userInfo, [e.target.name]: file }); // Set image as an object with public_id and url: file });
+  //     const imageURL = URL.createObjectURL(file);
+  //     setSelectedImageURL(imageURL);
+  //   }
+  // };
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setUploadedImage(reader.result);
+      const file = e.target.files[0];
+      if (file) {
+          setUserInfo({ ...userInfo, [e.target.name]: file }); // Set image as an object with public_id and url: file });
+        const imageURL = URL.createObjectURL(file);
+        setUploadedImage(imageURL);
+      }
     };
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const [isCheckboxChecked, setCheckboxChecked] = useState(false);
+const [isCheckboxChecked, setCheckboxChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setCheckboxChecked(!isCheckboxChecked);
@@ -45,7 +56,7 @@ const Register = () => {
     const { name, value } = e.target;
 
     // Update form data
-    setFormData((prevData) => ({
+     setUserInfo((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -62,55 +73,55 @@ const Register = () => {
     const newErrors = {};
 
     // Validate first name
-    if (formData.firstName.trim() === "") {
+    if (userInfo.firstName.trim() === "") {
       newErrors.firstName = " ";
       isValid = false;
-    } else if (formData.firstName.length < 4) {
+    } else if (userInfo.firstName.length < 4) {
       newErrors.firstName = "First Name must be atleast 4 characters";
       isValid = false;
     }
     // Validate last name
-    if (formData.lastName.trim() === "") {
+    if (userInfo.lastName.trim() === "") {
       newErrors.lastName = " ";
       isValid = false;
-    } else if (formData.lastName.length < 4) {
+    } else if (userInfo.lastName.length < 4) {
       newErrors.lastName = "Last Name must be atleast 4 characters";
       isValid = false;
     }
 
     // Validate email
-    if (formData.email.trim() === "") {
+    if (userInfo.email.trim() === "") {
       newErrors.email = " ";
       isValid = false;
-    } else if (!isValidEmail(formData.email)) {
+    } else if (!isValidEmail(userInfo.email)) {
       newErrors.email = "Email is not valid format";
       isValid = false;
     }
     // Validate password
-    if (formData.password.trim() === "") {
+    if (userInfo.password.trim() === "") {
       newErrors.password = " ";
       isValid = false;
-    } else if (formData.password.length < 6) {
+    } else if (userInfo.password.length < 6) {
       newErrors.password = "Password must be atleast 6 characters";
       isValid = false;
     }
     // Validate confirm password
-    if (formData.confirmPassword.trim() === "") {
+    if (userInfo.confirmPassword.trim() === "") {
       newErrors.confirmPassword = " ";
       isValid = false;
-    } else if (formData.password !== formData.confirmPassword) {
+    } else if (userInfo.password !== userInfo.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
       isValid = false;
     }
 
     // Validate phone
-    if (formData.phone.trim() === "") {
-      newErrors.phone = " ";
-      isValid = false;
-    } else if (!isValidPhone(formData.phone)) {
-      newErrors.phone = "Phone is not valid format";
-      isValid = false;
-    }
+    // if (userInfo.phoneNumber.trim() === "") {
+    //   newErrors.phoneNumber = " ";
+    //   isValid = false;
+    // } else if (!isValidPhone(userInfo.phone)) {
+    //   newErrors.phone = "Phone is not valid format";
+    //   isValid = false;
+    // }
 
 
     setErrors(newErrors);
@@ -121,20 +132,33 @@ const Register = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
     return emailRegex.test(email);
   };
-  const isValidPhone = (phone) => {
-    const phoneNumberRegex = /^\d{4}[-.\s]?\d{3}\d{4}$/;
+  // const isValidPhone = (phone) => {
+  //   const phoneNumberRegex = /^\d{4}[-.\s]?\d{3}\d{4}$/;
 
-    return phoneNumberRegex.test(phone);
-  };
+  //   return phoneNumberRegex.test(phone);
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    if(userInfo?.image){
+      formData.append("image", userInfo?.image);
+    }
+    formData.append("firstName", userInfo?.firstName);
+    formData.append("lastName", userInfo?.lastName);
+    formData.append("email", userInfo?.email);
+    formData.append("password", userInfo?.password);
+    // formData.append("confirmPassword", formData.confirmPassword);
+    formData.append("phoneNumber", userInfo?.phoneNumber);
+    formData.append("category", userInfo?.category);
 
     if (validateForm()) {
-      console.log("Form data saved:", formData, uploadedImage);
+    console.log(userInfo);
+    addUser(formData);
     }else {
-      console.log(formData, uploadedImage)
+      console.log(userInfo, uploadedImage)
     }
-  };
+
+  }
   return (
     <section class="bg-gray-50">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -149,6 +173,7 @@ const Register = () => {
                 accept="image/*"
                 onChange={handleImageUpload}
                 className="mb-2"
+                name="image"
               />
               <img
                 src={uploadedImage}
@@ -157,7 +182,7 @@ const Register = () => {
                 style={{ width: "120px", height: "120px", border: "1px solid" }}
               />
             </div>
-            <form class="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" action="#">
               <div className="flex block">
                 <div className="w-full sm:w-1/2 sm:mb-0">
                   <label
@@ -169,7 +194,7 @@ const Register = () => {
                   <input
                     type="text"
                     name="firstName"
-                    value={formData.firstName}
+                    value={userInfo.firstName}
                     onChange={handleChange}
                     style={{ border: errors.firstName ? '1px ridge red' : '', backgroundColor: errors.firstName ? '#fce0d9' : '' }}
                     id="firstName"
@@ -189,7 +214,7 @@ const Register = () => {
                   <input
                     type="text"
                     name="lastName"
-                    value={formData.lastName}
+                    value={userInfo.lastName}
                     onChange={handleChange}
                     style={{ border: errors.lastName ? '1px ridge red' : '', backgroundColor: errors.lastName ? '#fce0d9' : '' }}
                     id="lastName"
@@ -211,7 +236,7 @@ const Register = () => {
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
+                  value={userInfo.email}
                   onChange={handleChange}
                   style={{ border: errors.email ? '1px ridge red' : '', backgroundColor: errors.email ? '#fce0d9' : '' }}
                   id="email"
@@ -232,7 +257,7 @@ const Register = () => {
                   <input
                     type="password"
                     name="password"
-                    value={formData.password}
+                    value={userInfo.password}
                     onChange={handleChange}
                     style={{ border: errors.password ? '1px ridge red' : '', backgroundColor: errors.password ? '#fce0d9' : '' }}
                     id="password"
@@ -252,7 +277,7 @@ const Register = () => {
                   <input
                     type="password"
                     name="confirmPassword"
-                    value={formData.confirmPassword}
+                    value={userInfo.confirmPassword}
                     onChange={handleChange}
                     style={{ border: errors.confirmPassword ? '1px ridge red' : '', backgroundColor: errors.confirmPassword ? '#fce0d9' : '' }}
                     id="confirmPassword"
@@ -272,8 +297,8 @@ const Register = () => {
                 </label>
                 <input
                   type="text"
-                  name="phone"
-                  value={formData.phone}
+                  name="phoneNumber"
+                  value={userInfo.phoneNumber}
                   onChange={handleChange}
                   style={{ border: errors.phone ? '1px ridge red' : '', backgroundColor: errors.phone ? '#fce0d9' : '' }}
                   id="phone"
@@ -288,12 +313,12 @@ const Register = () => {
                   for="userType"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
-                  Type
+                  Category
                 </label>
                 <select
-                  name="userType"
+                  name="category"
                   id="userType"
-                  value={formData.userType}
+                  value={userInfo.category}
                   onChange={handleChange}
                   className="w-full border p-2 rounded mb-4"
                 >
@@ -325,6 +350,7 @@ const Register = () => {
               <button
                 type="submit"
                 onClick={handleSubmit}
+                
                 style={{ backgroundColor: !isCheckboxChecked ? "#e9f0e4":"#e8f3df"}}
                 disabled={!isCheckboxChecked}
                 class="w-full hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -346,6 +372,10 @@ const Register = () => {
       </div>
     </section>
   );
-};
 
+
+};
 export default Register;
+
+
+  

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../../store/storeApi";
+import { useGlobalContext } from "../../UserContext/UserContext";
 
 const Login = () => {
+  // const {isLogedUser,setLogedUser} = useGlobalContext()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate()
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -45,13 +49,26 @@ const Login = () => {
     setErrors(newErrors);
     return isValid;
   };
+    
+    const [loginUser, { isLoading, isError ,data,isSuccess}] = useLoginUserMutation()
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Form data saved:", formData);
+    const respData = await loginUser(formData);
+    console.log('respData', respData?.data)
+   
+      localStorage.setItem('tokenabc', JSON.stringify(respData?.data))
+  
+      navigate('/')
     }
   };
+  if(isError){
+    alert("some thing wrong")
+  }
+  if(isLoading){
+    return <h1>loading ...!</h1>
+  }
   return (
     <section class="bg-gray-50">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">

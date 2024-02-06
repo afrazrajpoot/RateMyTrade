@@ -1,25 +1,65 @@
 const TrademanSchema = require('../models/Tradesmen');
 const cloudinary = require('../cloudinary.config')
-// Function to update an existing trademan
+
 const createTrademanProfile = async (req, res) => {
   try {
-    const { occupation, username, email, ratings, hourlyRate, description, location, lat, lng, phoneNumber } = req.body;
-    const parsedLat = Number(lat?.[1]);
-    const parsedLng = Number(lng?.[1]);
-
+    const {
+      username,
+      tradeType,
+      location,
+      phoneNumber,
+      description,
+      lat, lng
+   
+    } = req.body;
+    const parsedLat = Number(lat);
+    const parsedLng = Number(lng);
+    console.log(typeof parsedLat, typeof parsedLng, "let, lng");
+    console.log(req.body, "body");
     let mainImageURL;
 
-    // Handle image updates
-    if (req.file) {
-      const mainImage = req.file;
+    // Handle main image update
+    if (req.files && req.files.image) {
+      const mainImage = req.files.image[0];
       const mainImageResult = await cloudinary.uploader.upload(mainImage.path, {
         folder: 'Assets',
       });
+
+      if (mainImageResult.error) {
+        console.error('Cloudinary upload error for main image:', mainImageResult.error);
+        // Handle the error appropriately
+      }
+
       mainImageURL = mainImageResult.secure_url;
     }
 
+    // Handle gig images update
+    const gigImages = [];
+
+    for (let i = 1; i <= 3; i++) {
+      const gigImageField = `gigImage${i}`;
+      console.log(gigImageField, 'gigImageField');
+
+      if (req.files && req.files[gigImageField]) {
+        const gigImage = req.files[gigImageField][0];
+        const gigImageResult = await cloudinary.uploader.upload(gigImage.path, {
+          folder: 'Assets',
+        });
+        gigImages.push(gigImageResult.secure_url);
+      }
+    }
+
     const newContent = new TrademanSchema({
-      occupation, username, email, ratings, hourlyRate, description, location, image: mainImageURL, lat: parsedLat, lng: parsedLng, phoneNumber
+      username,
+      tradeType,
+      location,
+      phoneNumber,
+      description,
+      lat:parsedLat, lng:parsedLng,
+     image:mainImageURL,
+      gigImage1: gigImages[0],
+      gigImage2: gigImages[1],
+      gigImage3: gigImages[2],
     });
 
     const savedContent = await newContent.save();
@@ -29,15 +69,18 @@ const createTrademanProfile = async (req, res) => {
     };
 
     if (mainImageURL) {
-      responseObj.mainImage = mainImageURL;
+      responseObj.image = mainImageURL;
     }
+
+   
 
     res.status(201).json(responseObj);
   } catch (error) {
-    console.error('Error saving product:', error);
-    res.status(500).json({ message: 'Error saving product' });
+    console.error('Error saving profile:', error);
+    res.status(500).json({ message: error.message });
   }
 };
+
 
 const updateTrademanProfile = async (req, res) => {
   try {
@@ -149,8 +192,9 @@ const updateTrademanProfile = async (req, res) => {
 // Get all trademans
 const getAllTradesmenProfiles = async (req, res) => {
   try {
-    const profiles = await TrademanSchema.find();
-    res.status(200).json(profiles);
+    const profiles = await TrademanSchema.find().populate("User");
+    
+    res.status(200).json({profiles:profiles});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

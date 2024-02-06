@@ -94,7 +94,8 @@ const Map = ({setSearchedLocation}) => {
 
   const handleSuggestionClick = (suggestion) => {
     setSearchText(suggestion.place_name);
-    // setSearchedLocation(suggestion); // set the location
+    setSearchedLocation(suggestion); 
+    console.log(suggestion, "suggesstion");// set the location
     setHideSuggestions(true)
   };
 

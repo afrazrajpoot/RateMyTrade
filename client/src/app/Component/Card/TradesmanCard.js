@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function TradesmanCard({ image, username, occupation }) {
+function TradesmanCard({ id,image, username, occupation }) {
   return (
-    <Link to="">
+    <Link to={`/dynamicProfile/${id}`}>
         <div className="projectCard m-vw">
       <img src={image ? image : '/img/man.png'}  alt="" />
       <div className="info">

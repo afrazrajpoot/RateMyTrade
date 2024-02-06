@@ -6,9 +6,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import axios from 'axios';
 import { useUpdateTradesmanMutation } from '../../store/storeApi';
+import { useGlobalContext } from '../../UserContext/UserContext';
 
 
-const ImageInput = ({ id, name, accept, selectedImage, handleImageChange }) => {
+export const ImageInput = ({ id, name, selectedImage, handleImageChange }) => {
   return (
     <div className='relative m-vw w-full bg-gray-300 cursor-pointer hover:bg-gray-400 overflow-hidden max-w-[20vw] h-[12vw] rounded-md border-2'>
       <label htmlFor={id} className='relative bg-gray-300'>
@@ -17,12 +18,13 @@ const ImageInput = ({ id, name, accept, selectedImage, handleImageChange }) => {
           <Icon icon='ant-design:camera-filled' className='text-3vw text-white absolute top-[4vw] left-[8vw] z-50' />
         )}
       </label>
-      <input type='file' id={id} name={name} onChange={handleImageChange} className='sr-only' />
+      <input type='file'  id={id} name={name} onChange={handleImageChange} className='sr-only hover:cursor-pointer' />
     </div>
   );
 };
 
 const Portfolio = () => {
+  const {tradesManProfile,setTradesManProfile} = useGlobalContext()
   const {id} = useParams();
   const [userInfo, setUserInfo] = useState({
     gigImage1: "", gigImage2: "", gigImage3: "",
@@ -35,22 +37,27 @@ const Portfolio = () => {
   console.log(id, "tr ki id");
 
   const navigate = useNavigate();
-  const [updateTradesman] = useUpdateTradesmanMutation();
-  const { handleSubmit, setValue, control, formState: { errors }, reset, register } = useForm({
+  // const [updateTradesman] = useUpdateTradesmanMutation();
+  const {  setValue,  formState: { errors }, reset, register } = useForm({
     defaultValues: {
       gigImage1: "",
       gigImage2: "",
       gigImage3: "",
     },
   });
-  const handleImageChange = (e) => {
+  const handleImageChange = (name, e) => {
     const file = e.target.files[0];
     if (file) {
-      setUserInfo({ ...userInfo, [e.target.name]: file });
+      setValue(name, file);
       const imageURL = URL.createObjectURL(file);
-      setSelectedFileURL({ ...selectedFileURL, [e.target.name]: imageURL });
+      setSelectedFileURL((prevSelectedFileURL) => ({
+        ...prevSelectedFileURL,
+        [name]: imageURL,
+      }));
+      setTradesManProfile({ ...tradesManProfile, [name]: file });
     }
   };
+  
   const showToast = (message, type) => {
     toast[type](message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -105,9 +112,9 @@ const onSubmit = async (data, e) => {
     <section className="w-full p-[0.5vw]">
       <h1 className='text-vw text-black font-semibold'>Images (up to 3)</h1>
       <div className="flex mt-vw items-center">
-        <ImageInput id='gigImage1' name='gigImage1' selectedImage={selectedFileURL?.gigImage1} handleImageChange={handleImageChange} />
-        <ImageInput id='gigImage2' name='gigImage2' selectedImage={selectedFileURL?.gigImage2} handleImageChange={handleImageChange} />
-        <ImageInput id='gigImage3' name='gigImage3' selectedImage={selectedFileURL?.gigImage3} handleImageChange={handleImageChange} />
+        <ImageInput id='gigImage1' name='gigImage1' selectedImage={selectedFileURL?.gigImage1} handleImageChange={(e)=>handleImageChange('gigImage1',e)} />
+        <ImageInput id='gigImage2' name='gigImage2' selectedImage={selectedFileURL?.gigImage2} handleImageChange={(e)=>handleImageChange('gigImage2',e)} />
+        <ImageInput id='gigImage3' name='gigImage3' selectedImage={selectedFileURL?.gigImage3} handleImageChange={(e)=>handleImageChange('gigImage3',e)} />
       </div>
     </section>
   </div>
