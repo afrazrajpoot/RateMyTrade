@@ -12,6 +12,8 @@ import Contact from './app/pages/Mian/Contact'
 import HowItWorks from './app/pages/Mian/HowItWorks'
 import SingleProfile from './app/Component/TradesmanProfile/SingleProfile'
 import Navbar from './app/Component/Common/Navbar'
+import BookingForm from './app/pages/BookingForm'
+import BookingPage from './app/pages/BookingPage'
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/howitworks' element={<HowItWorks />} />
+        <Route path='/bookingForm' element={<BookingForm />} />
+        <Route path='/bookingPage' element={<BookingPage />} />
       </Routes>
     </>
   )

@@ -2,8 +2,9 @@ import React from "react";
 // import Layout from "../../Layout/Layout";
 
 import { useNavigate, useParams } from "react-router-dom";
+import { useGetTrademanByIdQuery } from "../store/storeApi";
 
-import { useGetTrademanByIdQuery } from "../../store/storeApi";
+// import { useGetTrademanByIdQuery } from "../../store/storeApi";
 
 const BookingPage = () => {
   const { id } = useParams();
