@@ -307,7 +307,7 @@ const BookingForm = () => {
                     name="addInfo"
                     value={formData.addInfo}
                     onChange={handleChange}
-                    className={`mt-1 p-2 border border-black-on-active border-3 w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border-gray-300   ${
+                    className={`mt-1 border border-black-on-active border-3 w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border-gray-300   ${
                       errors.addInfo ? "bg-rose-200" : ""
                     }`}
                     placeholder="Enter Additional Information"
